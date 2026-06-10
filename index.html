@@ -3,301 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aarav's Vault</title>
+    <title>Aarav's Vault — Web OS</title>
     <style>
-        /* Modern CSS Reset & Variables */
+        /* Root Settings & Theme Colors */
         :root {
-            --bg-color: #0b0c10;
-            --container-bg: rgba(255, 255, 255, 0.03);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --accent-color: #6366f1; /* Electric Indigo */
-            --accent-glow: rgba(99, 102, 241, 0.2);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --sidebar-bg: rgba(20, 18, 24, 0.75);
+            --sidebar-border: rgba(255, 255, 255, 0.05);
+            --card-bg: rgba(25, 23, 30, 0.6);
+            --card-hover: rgba(255, 255, 255, 0.08);
+            --accent-color: #ff7b00; /* Warm orange accent from the photo */
+            --text-main: #ffffff;
+            --text-muted: #9aa0a6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920') no-repeat center center fixed;
+            background-size: cover;
             color: var(--text-main);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            margin: 0;
-            padding: 0;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* --- LEFT SIDEBAR --- */
+        aside {
+            width: 260px;
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-right: 1px solid var(--sidebar-border);
+            display: flex;
+            flex-direction: column;
+            padding: 25px 15px;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 35px;
+            padding-left: 10px;
+        }
+
+        .brand-logo {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .brand-title h1 {
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-title p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .nav-section {
+            margin-bottom: 25px;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        .btn-discord {
+            display: block;
+            text-align: center;
+            background: rgba(88, 101, 242, 0.2);
+            color: #5865F2;
+            border: 1px solid rgba(88, 101, 242, 0.4);
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-discord:hover {
+            background: rgba(88, 101, 242, 0.3);
+        }
+
+        /* --- MAIN DESKTOP AREA --- */
+        main {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Glassmorphic Navbar */
-        header {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(90deg, #fff, var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        nav {
-            display: flex;
-            gap: 15px;
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--text-main);
-            background: var(--container-bg);
-            border: 1px solid var(--border-color);
-        }
-
-        /* Centralized Search Section */
-        .search-section {
-            text-align: center;
-            margin: 60px 20px 40px 20px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .search-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .search-box {
+            justify-content: center;
+            padding: 40px;
             position: relative;
+            background: rgba(0, 0, 0, 0.2); /* Dark overlay to pop elements */
+        }
+
+        /* Center Hub Content */
+        .hub-center {
+            text-align: center;
+            width: 100%;
+            max-width: 650px;
+            margin-bottom: 40px;
+        }
+
+        .widget-clock {
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+
+        .widget-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        /* Search Bar Pill */
+        .search-container {
+            width: 100%;
+            background: rgba(20, 20, 25, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 6px 20px;
             display: flex;
             align-items: center;
-            background: var(--container-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 6px 10px;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .search-box:focus-within {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .search-box input {
+        .search-container input {
             flex: 1;
             background: transparent;
             border: none;
             outline: none;
-            color: var(--text-main);
-            padding: 12px;
-            font-size: 1rem;
-        }
-
-        .search-box button {
-            background: var(--accent-color);
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
+            font-size: 1.05rem;
+            padding: 10px;
         }
 
-        .search-box button:hover {
-            opacity: 0.9;
-        }
-
-        /* Main Content Grids */
-        .main-container {
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .content-heading {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 40px 0 20px 0;
-            color: var(--text-main);
+        /* Category Filter Pills */
+        .categories {
             display: flex;
-            align-items: center;
+            justify-content: center;
             gap: 10px;
+            margin-top: 25px;
         }
 
-        .content-heading::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-color);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 24px;
-        }
-
-        /* Interactive Cards */
-        .card {
-            background: var(--container-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
+        .pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            transition: all 0.2s;
+            color: var(--text-main);
         }
 
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent-color);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        .pill:hover, .pill.active {
+            background: var(--accent-color);
+            color: black;
+            font-weight: 600;
         }
 
-        .card-thumbnail {
-            width: 100%;
-            height: 140px;
-            background: linear-gradient(135deg, #1e1b4b, #311042);
-            position: relative;
+        /* App Grid Shortcuts */
+        .app-grid {
             display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .app-tile {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            width: 100px;
+            height: 100px;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 8px;
         }
 
-        /* Standardized placeholder icon styling */
-        .card-thumbnail::before {
-            content: '🎮';
-            font-size: 2rem;
-            opacity: 0.4;
+        .app-tile:hover {
+            transform: translateY(-5px);
+            background: var(--card-hover);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
-        .movie-card .card-thumbnail::before {
-            content: '🎬';
+        .app-icon {
+            font-size: 1.8rem;
         }
 
-        .card-info {
-            padding: 16px;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin: 0 0 4px 0;
-        }
-
-        .card-category {
+        .app-name {
             font-size: 0.8rem;
             color: var(--text-muted);
         }
 
-        /* Embed Container (Hidden by default, triggered when clicking a card) */
-        .embed-wrapper {
-            display: none;
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            margin-top: 20px;
-            overflow: hidden;
-        }
-
-        .embed-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .app-tile:hover .app-name {
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">AARAV'S VAULT</div>
-        <nav>
-            <a href="#games" class="active">Games</a>
-            <a href="#movies">Movies</a>
-        </nav>
-    </header>
-
-    <div class="search-section">
-        <h2>Uncover the Vault</h2>
-        <form class="search-box" action="https://duckduckgo.com/" method="get" target="_blank">
-            <input type="text" name="q" placeholder="Search the web securely...">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-
-    <main class="main-container">
-
-        <div class="embed-wrapper" id="vaultViewer">
-            <iframe id="viewerFrame" src=""></iframe>
-        </div>
-
-        <div class="content-heading" id="games">Featured Games</div>
-        <div class="grid">
-            <div class="card" onclick="loadContent('https://play.pacman.com/')">
-                <div class="card-thumbnail"></div>
-                <div class="card-info">
-                    <h3 class="card-title">Retro Arcade</h3>
-                    <span class="card-category">Classic Game</span>
-                </div>
-            </div>
-            <div class="card" onclick="loadContent('https://classic.minecraft.net/')">
-                <div class="card-thumbnail"></div>
-                <div class="card-info">
-                    <h3 class="card-title">Voxel World</h3>
-                    <span class="card-category">Sandbox Game</span>
-                </div>
+    <aside>
+        <div class="brand">
+            <div class="brand-logo">V</div>
+            <div class="brand-title">
+                <h1>Vault OS</h1>
+                <p>Aarav's Hub</p>
             </div>
         </div>
 
-        <div class="content-heading" id="movies">Vault Movies & Media</div>
-        <div class="grid">
-            <div class="card movie-card" onclick="loadContent('https://www.youtube.com/embed/dQw4w9WgXcQ')">
-                <div class="card-thumbnail"></div>
-                <div class="card-info">
-                    <h3 class="card-title">Trending Stream 1</h3>
-                    <span class="card-category">Movie/Video</span>
-                </div>
+        <div class="nav-section">
+            <div class="section-label">Entertainment</div>
+            <a href="#" class="nav-item active"><span>🏠</span> Home</a>
+            <a href="#" class="nav-item"><span>🎬</span> Cinema</a>
+            <a href="#" class="nav-item"><span>🎮</span> Games</a>
+            <a href="#" class="nav-item"><span>🕹️</span> Emulator</a>
+        </div>
+
+        <div class="nav-section">
+            <div class="section-label">Tools</div>
+            <a href="#" class="nav-item"><span>🌐</span> Browser Proxy</a>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="#" class="btn-discord">Join Discord</a>
+        </div>
+    </aside>
+
+    <main>
+        
+        <div class="hub-center">
+            <div class="widget-clock" id="liveClock">Welcome Back</div>
+            <div class="widget-subtitle">Your cinematic web dashboard portal</div>
+
+            <form class="search-container" action="https://duckduckgo.com/" method="get" target="_blank">
+                <input type="text" name="q" placeholder="Search the web or enter a URL...">
+            </form>
+
+            <div class="categories">
+                <div class="pill active">Popular</div>
+                <div class="pill">Games</div>
+                <div class="pill">Media</div>
+                <div class="pill">Apps</div>
             </div>
+        </div>
+
+        <div class="app-grid">
+            <a href="https://youtube.com" target="_blank" class="app-tile">
+                <div class="app-icon">📺</div>
+                <div class="app-name">YouTube</div>
+            </a>
+            <a href="https://reddit.com" target="_blank" class="app-tile">
+                <div class="app-icon">🤖</div>
+                <div class="app-name">Reddit</div>
+            </a>
+            <a href="https://google.com" target="_blank" class="app-tile">
+                <div class="app-icon">🔍</div>
+                <div class="app-name">Google</div>
+            </a>
+            <a href="https://spotify.com" target="_blank" class="app-tile">
+                <div class="app-icon">🎵</div>
+                <div class="app-name">Spotify</div>
+            </a>
+            <a href="https://discord.com" target="_blank" class="app-tile">
+                <div class="app-icon">💬</div>
+                <div class="app-name">Discord</div>
+            </a>
         </div>
 
     </main>
 
     <script>
-        function loadContent(url) {
-            const viewer = document.getElementById('vaultViewer');
-            const iframe = document.getElementById('viewerFrame');
-            
-            // Set the iframe source to the game or movie link
-            iframe.src = url;
-            // Display the embed block smoothly
-            viewer.style.display = 'block';
-            // Scroll smoothly to the game window
-            viewer.scrollIntoView({ behavior: 'smooth' });
-        }
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const currentDay = days[new Date().getDay()];
+        document.getElementById('liveClock').innerText = currentDay;
     </script>
-
 </body>
 </html>
