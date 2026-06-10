@@ -12,7 +12,7 @@
             --card-bg: rgba(25, 23, 30, 0.65);
             --card-hover: rgba(255, 255, 255, 0.1);
             --accent-color: #ff7b00; 
-            --arcade-yellow: #facc15; 
+            --arcade-yellow: #facc15; /* Exact yellow button accent from screenshot */
             --text-main: #ffffff;
             --text-muted: #9aa0a6;
         }
@@ -56,7 +56,7 @@
             filter: brightness(0.35) contrast(1.1);
         }
 
-        /* --- SIDEBAR NAVIGATION (FIXED CLICK LAYER) --- */
+        /* --- SIDEBAR NAVIGATION (FIXED STACK WEIGHT) --- */
         aside {
             width: 260px;
             min-width: 260px;
@@ -67,7 +67,7 @@
             display: flex;
             flex-direction: column;
             padding: 25px 15px;
-            z-index: 100; /* FORCE SIDEBAR TO STAY ON TOP OF ALL PANELS */
+            z-index: 200; /* ALWAYS ON TOP OF GAMES AND PANELS */
             position: relative;
         }
 
@@ -146,22 +146,14 @@
             transition: background 0.2s;
         }
 
-        /* --- STAGE VIEWPORT CONFIGURATION --- */
+        /* --- STAGE COMPONENT CONTAINMENT --- */
         main {
             flex: 1;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 100%;
-        }
-
-        /* Standardized view wrapping boundaries */
-        .panel-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 40px;
-            overflow-y: auto;
         }
 
         .workspace-view {
@@ -169,6 +161,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
         }
 
         .hub-center {
@@ -249,14 +244,21 @@
         .app-icon { font-size: 2.2rem; }
         .app-name { font-size: 0.8rem; color: var(--text-muted); text-align: center; }
 
-        /* --- ARCADE PANEL SPECIFICS --- */
+        /* --- HIGH PERFORMANCE CUSTOM ARCADE VAULT --- */
         .arcade-view {
             display: none; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: #111116;
             background-image: 
                 radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0),
                 radial-gradient(rgba(255, 255, 255, 0.02) 2px, transparent 0);
             background-size: 40px 40px, 80px 80px;
+            padding: 40px;
+            overflow-y: auto;
             z-index: 5;
         }
 
@@ -332,14 +334,14 @@
             background: #16161f;
             border: 2px solid #222230;
             border-radius: 16px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
             gap: 12px;
-            height: 255px;
+            height: 250px;
             transition: all 0.25s ease;
         }
 
@@ -350,23 +352,21 @@
 
         .game-thumbnail {
             width: 100%;
-            height: 120px;
+            height: 110px;
             border-radius: 10px;
             background: #0d0d11;
             object-fit: cover;
             border: 1px solid rgba(255,255,255,0.05);
-            display: block;
         }
 
         .game-card .title {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             width: 100%;
-            margin-top: 2px;
         }
 
         .btn-play-action {
@@ -381,7 +381,6 @@
             border: none;
             cursor: pointer;
             width: 100%;
-            margin-top: auto; 
             transition: transform 0.2s, background-color 0.2s;
         }
 
@@ -390,7 +389,7 @@
             transform: scale(1.02);
         }
 
-        /* --- INTERIOR GAME SYSTEM STAGE --- */
+        /* --- INTERIOR GAME SYSTEM VIEWPORT (FIXED POSITION MAPPING) --- */
         .game-player-frame {
             display: none;
             position: absolute;
@@ -399,7 +398,7 @@
             width: 100%;
             height: 100%;
             background: #000;
-            z-index: 110; /* Sits perfectly right over the panels and navbar */
+            z-index: 100; /* Sits below Sidebar (200) but completely covers panel content */
         }
 
         .game-player-frame iframe {
@@ -473,12 +472,12 @@
         <div class="game-player-frame" id="gameViewport">
             <iframe id="arcadeFrame" src=""></iframe>
             <div class="game-control-bar">
-                <div class="embed-credit">Arcade Vault // <span>Live Viewport Active</span></div>
+                <div class="embed-credit">Arcade Vault // <span>pizza edition embed</span></div>
                 <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Arcade</button>
             </div>
         </div>
 
-        <div class="panel-container workspace-view" id="view-home-panel">
+        <div class="workspace-view" id="view-home-panel">
             <div class="hub-center">
                 <div class="widget-clock" id="liveClock">Welcome</div>
                 <div class="widget-subtitle">Your cinematic web dashboard portal</div>
@@ -506,7 +505,7 @@
             </div>
         </div>
 
-        <div class="panel-container arcade-view" id="view-cinema-panel">
+        <div class="arcade-view" id="view-cinema-panel">
             <div class="arcade-control-header">
                 <div class="arcade-header-title">
                     <h2>Cinema Hub Streaming</h2>
@@ -523,10 +522,10 @@
             </div>
         </div>
 
-        <div class="panel-container arcade-view" id="view-arcade-panel">
+        <div class="arcade-view" id="view-arcade-panel">
             <div class="arcade-control-header">
                 <div class="arcade-header-title">
-                    <h2>THE <span>ARCADE VAULT</span></h2>
+                    <h2>THE <span>PIZZA EDITION</span> ARCADE VAULT</h2>
                     <div class="moving-lines"></div>
                 </div>
                 <input type="text" class="arcade-search" id="arcadeSearchInput" placeholder="Search hundreds of games instantly..." oninput="filterArcadeLibrary()">
@@ -542,48 +541,51 @@
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-        // CDN Game Database Repository
         const arcadeLibraryDatabase = [
-            { name: "Retro Bowl", url: "https://retrobowlgame.org/retro-bowl.embed", img: "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=400&auto=format&fit=crop&q=60" },
-            { name: "Slope 3D", url: "https://slopegame.online/slope-game.embed", img: "https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?w=400&auto=format&fit=crop&q=60" },
-            { name: "BitLife Sim", url: "https://bitlifeonline.com/bitlife.embed", img: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&auto=format&fit=crop&q=60" },
-            { name: "Geometry Dash", url: "https://geometrydash.io/geometry-dash.embed", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&auto=format&fit=crop&q=60" },
-            { name: "1v1.LOL", url: "https://1v1.lol/", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&auto=format&fit=crop&q=60" },
-            { name: "Tunnel Rush", url: "https://slopegame.online/slope-game.embed", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=400&auto=format&fit=crop&q=60" },
-            { name: "Drive Mad", url: "https://classic.minecraft.net/", img: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&auto=format&fit=crop&q=60" },
-            { name: "Cookie Clicker", url: "https://cookie-clicker2.github.io/", img: "https://images.unsplash.com/photo-1558961312-50a5f802d33d?w=400&auto=format&fit=crop&q=60" },
-            { name: "Minecraft Classic", url: "https://classic.minecraft.net/", img: "https://images.unsplash.com/photo-1605899435973-ca2d1a8861cf?w=400&auto=format&fit=crop&q=60" },
-            { name: "Subway Surfers", url: "https://subway-surfers.org/subway-surfers.embed", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&auto=format&fit=crop&q=60" },
-            { name: "Smash Karts", url: "https://smashkarts.io/", img: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=400&auto=format&fit=crop&q=60" },
-            { name: "Happy Wheels", url: "https://happywheels.org/happy-wheels.embed", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400&auto=format&fit=crop&q=60" },
-            { name: "Pac-Man Classic", url: "https://play.pacman.com/", img: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=400&auto=format&fit=crop&q=60" },
-            { name: "HaxBall", url: "https://haxball.com/", img: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=400&auto=format&fit=crop&q=60" },
-            { name: "Drift Hunters", url: "https://drift-hunters.io/drift-hunters.embed", img: "https://images.unsplash.com/photo-1616422285623-13ff0162193c?w=400&auto=format&fit=crop&q=60" },
-            { name: "Friday Night Funkin'", url: "https://v6p9d9t4.ssl.hwcdn.net/html/1907406/index.html", img: "https://images.unsplash.com/photo-1516280440614-37939bbacd6a?w=400&auto=format&fit=crop&q=60" },
-            { name: "Shell Shockers", url: "https://shellshock.io/", img: "https://images.unsplash.com/photo-1516116211223-5c359a36298a?w=400&auto=format&fit=crop&q=60" },
-            { name: "Just Fall.LOL", url: "https://justfall.lol/", img: "https://images.unsplash.com/photo-1627856013091-fed6e4e30025?w=400&auto=format&fit=crop&q=60" },
-            { name: "Zombs Royale", url: "https://zombsroyale.io/", img: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&auto=format&fit=crop&q=60" },
-            { name: "BuildNow GG", url: "https://buildnow.gg/", img: "https://images.unsplash.com/photo-1612287230202-1bf1d85d1bdf?w=400&auto=format&fit=crop&q=60" }
+            { id: "retrobowl", name: "Retro Bowl", folder: "retro-bowl", img: "https://the-pizza-edition-online.github.io/images/retro-bowl.png" },
+            { id: "slope", name: "Slope 3D", folder: "slope", img: "https://the-pizza-edition-online.github.io/images/slope.png" },
+            { id: "bitlife", name: "BitLife Sim", folder: "bitlife", img: "https://the-pizza-edition-online.github.io/images/bitlife.png" },
+            { id: "geometrydash", name: "Geometry Dash", folder: "geometry-dash", img: "https://the-pizza-edition-online.github.io/images/geometry-dash.png" },
+            { id: "1v1lol", name: "1v1.LOL", folder: "1v1-lol", img: "https://the-pizza-edition-online.github.io/images/1v1-lol.png" },
+            { id: "tunnelrush", name: "Tunnel Rush", folder: "tunnel-rush", img: "https://the-pizza-edition-online.github.io/images/tunnel-rush.png" },
+            { id: "drivemad", name: "Drive Mad", folder: "drive-mad", img: "https://the-pizza-edition-online.github.io/images/drive-mad.png" },
+            { id: "driftboss", name: "Drift Boss", folder: "drift-boss", img: "https://the-pizza-edition-online.github.io/images/drift-boss.png" },
+            { id: "run3", name: "Run 3", folder: "run-3", img: "https://the-pizza-edition-online.github.io/images/run-3.png" },
+            { id: "happywheels", name: "Happy Wheels", folder: "happy-wheels", img: "https://the-pizza-edition-online.github.io/images/happy-wheels.png" },
+            { id: "subwaysurfers", name: "Subway Surfers", folder: "subway-surfers", img: "https://the-pizza-edition-online.github.io/images/subway-surfers.png" },
+            { id: "cookieclicker", name: "Cookie Clicker", folder: "cookie-clicker", img: "https://the-pizza-edition-online.github.io/images/cookie-clicker.png" },
+            { id: "minecraft", name: "Minecraft Classic", folder: "minecraft", img: "https://the-pizza-edition-online.github.io/images/minecraft.png" },
+            { id: "eggycar", name: "Eggy Car", folder: "eggy-car", img: "https://the-pizza-edition-online.github.io/images/eggy-car.png" },
+            { id: "smashkarts", name: "Smash Karts", folder: "smash-karts", img: "https://the-pizza-edition-online.github.io/images/smash-karts.png" },
+            { id: "templerun2", name: "Temple Run 2", folder: "temple-run-2", img: "https://the-pizza-edition-online.github.io/images/temple-run-2.png" },
+            { id: "basketballstars", name: "Basketball Stars", folder: "basketball-stars", img: "https://the-pizza-edition-online.github.io/images/basketball-stars.png" },
+            { id: "stickmanhook", name: "Stickman Hook", folder: "stickman-hook", img: "https://the-pizza-edition-online.github.io/images/stickman-hook.png" },
+            { id: "clusterstruck", name: "Clustertruck", folder: "clustertruck", img: "https://the-pizza-edition-online.github.io/images/clustertruck.png" },
+            { id: "snowrider3d", name: "Snow Rider 3D", folder: "snow-rider-3d", img: "https://the-pizza-edition-online.github.io/images/snow-rider-3d.png" },
+            { id: "pizzatower", name: "Pizza Tower Mod", folder: "pizza-tower", img: "https://the-pizza-edition-online.github.io/images/pizza-tower.png" },
+            { id: "vex7", name: "Vex 7", folder: "vex-7", img: "https://the-pizza-edition-online.github.io/images/vex-7.png" },
+            { id: "worldshardestgame", name: "World's Hardest Game", folder: "worlds-hardest-game", img: "https://the-pizza-edition-online.github.io/images/worlds-hardest-game.png" },
+            { id: "crossyroad", name: "Crossy Road", folder: "crossy-road", img: "https://the-pizza-edition-online.github.io/images/crossy-road.png" }
         ];
 
-        // Bulk Generator Engine
         function compileArcadeLibrary() {
             const grid = document.getElementById('dynamicArcadeGrid');
             grid.innerHTML = "";
 
             arcadeLibraryDatabase.forEach(game => {
+                const embedTargetUrl = `https://the-pizza-edition-online.github.io/pages/${game.folder}.html`;
+                
                 const cardHTML = `
                     <div class="game-card" data-name="${game.name.toLowerCase()}">
-                        <img class="game-thumbnail" src="${game.img}" onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400';" alt="${game.name}">
+                        <img class="game-thumbnail" src="${game.img}" onerror="this.src='https://the-pizza-edition-online.github.io/images/default.png';" alt="${game.name}">
                         <div class="title">${game.name}</div>
-                        <button class="btn-play-action" onclick="loadGameEngine('${game.url}')">Start Playing!</button>
+                        <button class="btn-play-action" onclick="loadGameEngine('${embedTargetUrl}')">Start Playing!</button>
                     </div>
                 `;
                 grid.innerHTML += cardHTML;
             });
         }
 
-        // Search Filters Engine
         function filterArcadeLibrary() {
             const query = document.getElementById('arcadeSearchInput').value.toLowerCase();
             const cards = document.querySelectorAll('.game-card');
@@ -598,8 +600,11 @@
             });
         }
 
-        // Layout View Swapper Engine (Fixed panel swapping logic)
+        /* FIXED VIEWPORT ROUTER ENGINE */
         function switchView(target) {
+            // Automatically turn off and clear any active game windows when switching sidebar tabs
+            closeGameEngine();
+
             document.getElementById('view-home-panel').style.display = 'none';
             document.getElementById('view-cinema-panel').style.display = 'none';
             document.getElementById('view-arcade-panel').style.display = 'none';
@@ -620,7 +625,6 @@
             }
         }
 
-        // Open/Close Embedded Iframe Layer
         function loadGameEngine(sourceUrl) {
             document.getElementById('arcadeFrame').src = sourceUrl;
             document.getElementById('gameViewport').style.display = 'block';
@@ -631,7 +635,6 @@
             document.getElementById('gameViewport').style.display = 'none';
         }
 
-        // Search Input Logic Parser
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
