@@ -542,7 +542,7 @@
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
         const arcadeLibraryDatabase = [
-            // --- FIXED GAME TRACKS (OFFICIAL LIVE MIRROR PATHS) ---
+            // --- CORE TRACKS ROUTED DIRECTLY VIA THE UNBLOCKED PIZZA GIT PIPELINE ---
             { id: "retrobowl", name: "Retro Bowl", folder: "retro-bowl", img: "https://the-pizza-edition.github.io/images/retro-bowl.png" },
             { id: "slope", name: "Slope 3D", folder: "slope", img: "https://the-pizza-edition.github.io/images/slope.png" },
             { id: "bitlife", name: "BitLife Sim", folder: "bitlife", img: "https://the-pizza-edition.github.io/images/bitlife.png" },
@@ -568,7 +568,7 @@
             { id: "worldshardestgame", name: "World's Hardest Game", folder: "worlds-hardest-game", img: "https://the-pizza-edition.github.io/images/worlds-hardest-game.png" },
             { id: "crossyroad", name: "Crossy Road", folder: "crossy-road", img: "https://the-pizza-edition.github.io/images/crossy-road.png" },
 
-            // --- BATCH 1 & 2 COMBINED & UPDATED ---
+            // --- DEPLOYMENT BATCHES ---
             { id: "amongus", name: "Among Us Online", folder: "among-us", img: "https://the-pizza-edition.github.io/images/among-us.png" },
             { id: "badicecream", name: "Bad Ice Cream", folder: "bad-ice-cream", img: "https://the-pizza-edition.github.io/images/bad-ice-cream.png" },
             { id: "badicecream2", name: "Bad Ice Cream 2", folder: "bad-ice-cream-2", img: "https://the-pizza-edition.github.io/images/bad-ice-cream-2.png" },
@@ -597,7 +597,7 @@
             { id: "elasticman", name: "Elastic Man", folder: "elastic-man", img: "https://the-pizza-edition.github.io/images/elastic-man.png" },
             { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison", img: "https://the-pizza-edition.github.io/images/escaping-the-prison.png" },
 
-            // --- CUSTOM INJECTIONS & NEW GAMES ---
+            // --- INJECTIONS & EXTRA PATHS ---
             { id: "polytrack", name: "PolyTrack", folder: "polytrack", img: "https://the-pizza-edition.github.io/images/polytrack.png" },
             { id: "fnae", name: "Five Nights at Epstein's", folder: "CUSTOM_LINK", img: "https://the-pizza-edition-online.github.io/images/default.png", customUrl: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1" }
         ];
@@ -607,8 +607,8 @@
             grid.innerHTML = "";
 
             arcadeLibraryDatabase.forEach(game => {
-                // Rewritten to match base 44 logic: points to the live pizzaedition domain securely
-                const embedTargetUrl = game.customUrl ? game.customUrl : `https://pizzaedition.com/${game.folder}.html`;
+                // Pointing directly to the open-source pipeline files avoids domain-level iframe blockers entirely
+                const embedTargetUrl = game.customUrl ? game.customUrl : `https://the-pizza-edition.github.io/${game.folder}/`;
                 
                 const cardHTML = `
                     <div class="game-card" data-name="${game.name.toLowerCase()}">
