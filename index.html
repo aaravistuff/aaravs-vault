@@ -607,8 +607,8 @@
             grid.innerHTML = "";
 
             arcadeLibraryDatabase.forEach(game => {
-                // If it's a custom URL use it directly, otherwise build it using the bplus-math mirror path
-             const embedTargetUrl = game.customUrl ? game.customUrl : `https://the-pizza-edition.github.io/${game.folder}/`;
+                // Fixed CDN path mapping line below to completely bypass GitHub 404 firewalls
+                const embedTargetUrl = game.customUrl ? game.customUrl : `https://cdn.jsdelivr.net/gh/the-pizza-edition/the-pizza-edition.github.io@main/${game.folder}/`;
                 
                 const cardHTML = `
                     <div class="game-card" data-name="${game.name.toLowerCase()}">
