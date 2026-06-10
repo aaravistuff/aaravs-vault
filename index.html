@@ -152,7 +152,7 @@
             justify-content: flex-start;
             padding: 40px;
             position: relative;
-            overflow-y: auto; /* Allows scrolling through lists */
+            overflow-y: auto;
         }
 
         .hub-center {
@@ -263,7 +263,7 @@
         .game-screen {
             position: fixed;
             top: 0;
-            left: 260px; /* Aligns right next to the sidebar */
+            left: 260px; 
             width: calc(100% - 260px);
             height: 100%;
             background: #000;
@@ -302,7 +302,7 @@
 <body>
 
     <div class="wallpaper-bg-container">
-        <iframe src="https://www.youtube.com/embed/fKcF32dmcDk?autoplay=1&mute=1&loop=1&playlist=fKcF32dmcDk&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1" 
+        <iframe src="https://www.youtube.com/embed/fKcF32dmcDk?autoplay=1&mute=1&loop=1&playlist=fKcF32dmcDk&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1" 
                 allow="autoplay; encrypted-media" 
                 frameborder="0">
         </iframe>
@@ -320,14 +320,8 @@
         <div class="nav-section">
             <div class="section-label">Entertainment</div>
             <div class="nav-item active" onclick="closeContent()"><span>🏠</span> Home</div>
-            <a href="#cinema-sec" class="nav-item"><span>🎬</span> Cinema</a>
-            <a href="#games-sec" class="nav-item"><span>🎮</span> Games</a>
-        </div>
-
-        <div class="nav-section">
-            <div class="section-label">External links</div>
-            <a href="https://youtube.com" target="_blank" class="nav-item"><span>📺</span> YouTube</a>
-            <a href="https://discord.com" target="_blank" class="nav-item"><span>💬</span> Discord</a>
+            <a href="#cinema-sec" class="nav-item"><span>🎬</span> Cinema Hub</a>
+            <a href="#games-sec" class="nav-item"><span>🍕</span> Pizza Arcade</a>
         </div>
 
         <div class="sidebar-footer">
@@ -351,39 +345,35 @@
             </form>
         </div>
 
-        <div class="grid-header" id="games-sec">Featured Games</div>
+        <div class="grid-header" id="games-sec">The Pizza Edition Arcade</div>
         <div class="app-grid">
-            <div onclick="launchContent('https://play.pacman.com/')" class="app-tile">
-                <div class="app-icon">🕹️</div>
-                <div class="app-name">Pac-Man</div>
+            <div onclick="launchContent('https://thepizzaeditiongames.github.io/')" class="app-tile">
+                <div class="app-icon">🍕</div>
+                <div class="app-name">Pizza Main</div>
             </div>
-            <div onclick="launchContent('https://classic.minecraft.net/')" class="app-tile">
-                <div class="app-icon">🧱</div>
-                <div class="app-name">Minecraft</div>
+            <div onclick="launchContent('https://thepizzaeditiongames.github.io/retro-bowl/')" class="app-tile">
+                <div class="app-icon">🏈</div>
+                <div class="app-name">Retro Bowl</div>
             </div>
-            <div onclick="launchContent('https://www.google.com/logos/2010/pacman10-hp.html')" class="app-tile">
-                <div class="app-icon">👾</div>
-                <div class="app-name">Google Arcade</div>
+            <div onclick="launchContent('https://thepizzaeditiongames.github.io/slope/')" class="app-tile">
+                <div class="app-icon">🟢</div>
+                <div class="app-name">Slope</div>
             </div>
-            <div onclick="launchContent('https://haxball.com/')" class="app-tile">
-                <div class="app-icon">⚽</div>
-                <div class="app-name">HaxBall</div>
+            <div onclick="launchContent('https://thepizzaeditiongames.github.io/bitlife/')" class="app-tile">
+                <div class="app-icon">💼</div>
+                <div class="app-name">BitLife</div>
             </div>
         </div>
 
-        <div class="grid-header" id="cinema-sec">Cinema & Media</div>
+        <div class="grid-header" id="cinema-sec">Dulo TV Media Portal</div>
         <div class="app-grid">
-            <div onclick="launchContent('https://www.youtube.com/embed/aqz-KE-bpKQ')" class="app-tile">
-                <div class="app-icon">🌌</div>
-                <div class="app-name">4K Space Lo-Fi</div>
+            <div onclick="launchContent('https://sites.google.com/view/dulotv')" class="app-tile">
+                <div class="app-icon">🎬</div>
+                <div class="app-name">DULO TV</div>
             </div>
-            <div onclick="launchContent('https://www.youtube.com/embed/jfKfPfyJRdk')" class="app-tile">
-                <div class="app-icon">🌿</div>
-                <div class="app-name">Nature Relax</div>
-            </div>
-            <div onclick="launchContent('https://www.youtube.com/embed/live_stream?channel=UC4R8DWoMoI7CAwX8_LjQHig')" class="app-tile">
-                <div class="app-icon">📰</div>
-                <div class="app-name">Live Stream</div>
+            <div onclick="launchContent('https://sites.google.com/view/dulotv/movies')" class="app-tile">
+                <div class="app-icon">🍿</div>
+                <div class="app-name">Dulo Movies</div>
             </div>
         </div>
 
@@ -412,7 +402,7 @@
             windowOverlay.style.display = 'none'; 
         }
 
-        // Smart Proxy / Search Input Logic
+        // Smart Input Logic
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
