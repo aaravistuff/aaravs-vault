@@ -11,7 +11,7 @@
             --sidebar-border: rgba(255, 255, 255, 0.05);
             --card-bg: rgba(25, 23, 30, 0.6);
             --card-hover: rgba(255, 255, 255, 0.08);
-            --accent-color: #ff7b00; /* Warm orange accent from the photo */
+            --accent-color: #ff7b00; /* Warm orange accent */
             --text-main: #ffffff;
             --text-muted: #9aa0a6;
         }
@@ -24,12 +24,35 @@
         }
 
         body {
-            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920') no-repeat center center fixed;
-            background-size: cover;
             color: var(--text-main);
             height: 100vh;
             display: flex;
             overflow: hidden;
+            background: #000;
+        }
+
+        /* --- BACKGROUND LIVE WALLPAPER CONTAINER --- */
+        .wallpaper-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none; /* Prevents clicking the video background */
+        }
+
+        .wallpaper-bg-container iframe {
+            width: 100vw;
+            height: 56.25vw; /* Fixed aspect ratio to stretch wide */
+            min-height: 100vh;
+            min-width: 177.77vh; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: brightness(0.4) contrast(1.1); /* darkens to make text pop */
         }
 
         /* --- LEFT SIDEBAR --- */
@@ -132,7 +155,6 @@
             justify-content: center;
             padding: 40px;
             position: relative;
-            background: rgba(0, 0, 0, 0.2); /* Dark overlay to pop elements */
         }
 
         /* Center Hub Content */
@@ -156,7 +178,7 @@
             margin-bottom: 30px;
         }
 
-        /* Search Bar Pill */
+        /* Smart Search Bar Pill */
         .search-container {
             width: 100%;
             background: rgba(20, 20, 25, 0.7);
@@ -254,6 +276,13 @@
 </head>
 <body>
 
+    <div class="wallpaper-bg-container">
+        <iframe src="https://www.youtube.com/embed/fKcF32dmcDk?autoplay=1&mute=1&loop=1&playlist=fKcF32dmcDk&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1" 
+                allow="autoplay; encrypted-media" 
+                frameborder="0">
+        </iframe>
+    </div>
+
     <aside>
         <div class="brand">
             <div class="brand-logo">V</div>
@@ -277,18 +306,18 @@
         </div>
 
         <div class="sidebar-footer">
-            <a href="#" class="btn-discord">Join Discord</a>
+            <a href="https://discord.com" target="_blank" class="btn-discord">Join Discord</a>
         </div>
     </aside>
 
     <main>
         
         <div class="hub-center">
-            <div class="widget-clock" id="liveClock">Welcome Back</div>
+            <div class="widget-clock" id="liveClock">Welcome</div>
             <div class="widget-subtitle">Your cinematic web dashboard portal</div>
 
-            <form class="search-container" action="https://duckduckgo.com/" method="get" target="_blank">
-                <input type="text" name="q" placeholder="Search the web or enter a URL...">
+            <form class="search-container" id="vaultSearchForm" onsubmit="handleVaultSearch(event)">
+                <input type="text" id="vaultSearchInput" placeholder="Search the web or enter a URL...">
             </form>
 
             <div class="categories">
@@ -325,9 +354,32 @@
     </main>
 
     <script>
+        // Set up the Live Day Tracker for the greeting widget
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const currentDay = days[new Date().getDay()];
         document.getElementById('liveClock').innerText = currentDay;
+
+        // Process search submissions smartly
+        function handleVaultSearch(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('vaultSearchInput').value.trim();
+            if (!input) return;
+
+            // Regex checking format for standard dot domain URLs
+            const isUrl = input.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/) || input.startsWith('http');
+
+            if (isUrl) {
+                let finalUrl = input;
+                if (!/^https?:\/\//i.test(input)) {
+                    finalUrl = 'https://' + input;
+                }
+                window.open(finalUrl, '_blank');
+            } else {
+                const searchUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
+                window.open(searchUrl, '_blank');
+            }
+        }
     </script>
 </body>
 </html>
