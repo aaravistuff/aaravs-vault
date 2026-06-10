@@ -146,7 +146,7 @@
             transition: background 0.2s;
         }
 
-        /* --- STAGE COMPONENT CONTAINMENT --- */
+        /* --- MAIN VIEWPORT COMPONENT --- */
         main {
             flex: 1;
             position: relative;
@@ -472,7 +472,7 @@
         <div class="game-player-frame" id="gameViewport">
             <iframe id="arcadeFrame" src="" allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation allow-modals"></iframe>
             <div class="game-control-bar">
-                <div class="embed-credit">Arcade Vault // <span>arcade embed framework</span></div>
+                <div class="embed-credit">Arcade Vault // <span>pizzaedition.win framework</span></div>
                 <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Arcade</button>
             </div>
         </div>
@@ -528,7 +528,7 @@
                     <h2>THE <span>PIZZA EDITION</span> ARCADE VAULT</h2>
                     <div class="moving-lines"></div>
                 </div>
-                <input type="text" class="arcade-search" id="arcadeSearchInput" placeholder="Search hundreds of games instantly..." oninput="filterArcadeLibrary()">
+                <input type="text" class="arcade-search" id="arcadeSearchInput" placeholder="Search official catalog instantly..." oninput="filterArcadeLibrary()">
             </div>
             
             <div class="arcade-grid" id="dynamicArcadeGrid"></div>
@@ -541,7 +541,7 @@
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-        // Active game database compiled straight from thepizzaedition-games distribution cloud catalog
+        // Verified active catalog with FNAE explicitly retained
         const arcadeLibraryDatabase = [
             { id: "retrobowl", name: "Retro Bowl", folder: "retro-bowl", img: "https://the-pizza-edition-games.github.io/images/retro-bowl.png" },
             { id: "slope", name: "Slope 3D", folder: "slope", img: "https://the-pizza-edition-games.github.io/images/slope.png" },
@@ -594,7 +594,6 @@
             { id: "ducklife4", name: "Duck Life 4", folder: "duck-life-4", img: "https://the-pizza-edition-games.github.io/images/duck-life-4.png" },
             { id: "elasticman", name: "Elastic Man", folder: "elastic-man", img: "https://the-pizza-edition-games.github.io/images/elastic-man.png" },
             { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison", img: "https://the-pizza-edition-games.github.io/images/escaping-the-prison.png" },
-            { id: "polytrack", name: "PolyTrack", folder: "polytrack", img: "https://the-pizza-edition-games.github.io/images/polytrack.png" },
             { id: "fnae", name: "Five Nights at Epstein's", folder: "CUSTOM_LINK", img: "https://the-pizza-edition-games.github.io/images/default.png", customUrl: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1" }
         ];
 
@@ -603,7 +602,6 @@
             grid.innerHTML = "";
 
             arcadeLibraryDatabase.forEach(game => {
-                // Pointing directly to the active unblocked games deployment pipeline
                 const embedTargetUrl = game.customUrl ? game.customUrl : `https://the-pizza-edition-games.github.io/${game.folder}/`;
                 
                 const cardHTML = `
