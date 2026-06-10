@@ -244,7 +244,7 @@
         .app-icon { font-size: 2.2rem; }
         .app-name { font-size: 0.8rem; color: var(--text-muted); text-align: center; }
 
-        /* --- HIGH PERFORMANCE CUSTOM ARCADE VAULT --- */
+        /* --- ARCADE VAULT DISPLAY --- */
         .arcade-view {
             display: none; 
             position: absolute;
@@ -389,7 +389,7 @@
             transform: scale(1.02);
         }
 
-        /* --- INTERIOR GAME SYSTEM VIEWPORT --- */
+        /* --- INTERNAL FRAME FOR FNAE --- */
         .game-player-frame {
             display: none;
             position: absolute;
@@ -472,8 +472,8 @@
         <div class="game-player-frame" id="gameViewport">
             <iframe id="arcadeFrame" src="" allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation allow-modals"></iframe>
             <div class="game-control-bar">
-                <div class="embed-credit">Arcade Vault // <span>pizzaedition.win framework</span></div>
-                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Arcade</button>
+                <div class="embed-credit">Internal Engine // <span>Custom Link Mode</span></div>
+                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Game</button>
             </div>
         </div>
 
@@ -528,7 +528,7 @@
                     <h2>THE <span>PIZZA EDITION</span> ARCADE VAULT</h2>
                     <div class="moving-lines"></div>
                 </div>
-                <input type="text" class="arcade-search" id="arcadeSearchInput" placeholder="Search official catalog instantly..." oninput="filterArcadeLibrary()">
+                <input type="text" class="arcade-search" id="arcadeSearchInput" placeholder="Search verified catalog..." oninput="filterArcadeLibrary()">
             </div>
             
             <div class="arcade-grid" id="dynamicArcadeGrid"></div>
@@ -541,60 +541,60 @@
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-        // Verified active catalog with FNAE explicitly retained
+        // Verified Pizza Edition catalog paths
         const arcadeLibraryDatabase = [
-            { id: "retrobowl", name: "Retro Bowl", folder: "retro-bowl", img: "https://the-pizza-edition-games.github.io/images/retro-bowl.png" },
-            { id: "slope", name: "Slope 3D", folder: "slope", img: "https://the-pizza-edition-games.github.io/images/slope.png" },
-            { id: "bitlife", name: "BitLife Sim", folder: "bitlife", img: "https://the-pizza-edition-games.github.io/images/bitlife.png" },
-            { id: "geometrydash", name: "Geometry Dash", folder: "geometry-dash", img: "https://the-pizza-edition-games.github.io/images/geometry-dash.png" },
-            { id: "1v1lol", name: "1v1.LOL", folder: "1v1-lol", img: "https://the-pizza-edition-games.github.io/images/1v1-lol.png" },
-            { id: "tunnelrush", name: "Tunnel Rush", folder: "tunnel-rush", img: "https://the-pizza-edition-games.github.io/images/tunnel-rush.png" },
-            { id: "drivemad", name: "Drive Mad", folder: "drive-mad", img: "https://the-pizza-edition-games.github.io/images/drive-mad.png" },
-            { id: "driftboss", name: "Drift Boss", folder: "drift-boss", img: "https://the-pizza-edition-games.github.io/images/drift-boss.png" },
-            { id: "run3", name: "Run 3", folder: "run-3", img: "https://the-pizza-edition-games.github.io/images/run-3.png" },
-            { id: "happywheels", name: "Happy Wheels", folder: "happy-wheels", img: "https://the-pizza-edition-games.github.io/images/happy-wheels.png" },
-            { id: "subwaysurfers", name: "Subway Surfers", folder: "subway-surfers", img: "https://the-pizza-edition-games.github.io/images/subway-surfers.png" },
-            { id: "cookieclicker", name: "Cookie Clicker", folder: "cookie-clicker", img: "https://the-pizza-edition-games.github.io/images/cookie-clicker.png" },
-            { id: "minecraft", name: "Minecraft Classic", folder: "minecraft", img: "https://the-pizza-edition-games.github.io/images/minecraft.png" },
-            { id: "eggycar", name: "Eggy Car", folder: "eggy-car", img: "https://the-pizza-edition-games.github.io/images/eggy-car.png" },
-            { id: "smashkarts", name: "Smash Karts", folder: "smash-karts", img: "https://the-pizza-edition-games.github.io/images/smash-karts.png" },
-            { id: "templerun2", name: "Temple Run 2", folder: "temple-run-2", img: "https://the-pizza-edition-games.github.io/images/temple-run-2.png" },
-            { id: "basketballstars", name: "Basketball Stars", folder: "basketball-stars", img: "https://the-pizza-edition-games.github.io/images/basketball-stars.png" },
-            { id: "stickmanhook", name: "Stickman Hook", folder: "stickman-hook", img: "https://the-pizza-edition-games.github.io/images/stickman-hook.png" },
-            { id: "clusterstruck", name: "Clustertruck", folder: "clustertruck", img: "https://the-pizza-edition-games.github.io/images/clustertruck.png" },
-            { id: "snowrider3d", name: "Snow Rider 3D", folder: "snow-rider-3d", img: "https://the-pizza-edition-games.github.io/images/snow-rider-3d.png" },
-            { id: "pizzatower", name: "Pizza Tower Mod", folder: "pizza-tower", img: "https://the-pizza-edition-games.github.io/images/pizza-tower.png" },
-            { id: "vex7", name: "Vex 7", folder: "vex-7", img: "https://the-pizza-edition-games.github.io/images/vex-7.png" },
-            { id: "worldshardestgame", name: "World's Hardest Game", folder: "worlds-hardest-game", img: "https://the-pizza-edition-games.github.io/images/worlds-hardest-game.png" },
-            { id: "crossyroad", name: "Crossy Road", folder: "crossy-road", img: "https://the-pizza-edition-games.github.io/images/crossy-road.png" },
-            { id: "amongus", name: "Among Us Online", folder: "among-us", img: "https://the-pizza-edition-games.github.io/images/among-us.png" },
-            { id: "badicecream", name: "Bad Ice Cream", folder: "bad-ice-cream", img: "https://the-pizza-edition-games.github.io/images/bad-ice-cream.png" },
-            { id: "badicecream2", name: "Bad Ice Cream 2", folder: "bad-ice-cream-2", img: "https://the-pizza-edition-games.github.io/images/bad-ice-cream-2.png" },
-            { id: "badicecream3", name: "Bad Ice Cream 3", folder: "bad-ice-cream-3", img: "https://the-pizza-edition-games.github.io/images/bad-ice-cream-3.png" },
-            { id: "bindingofisaac", name: "Binding of Isaac", folder: "binding-of-isaac", img: "https://the-pizza-edition-games.github.io/images/binding-of-isaac.png" },
-            { id: "bloonstd4", name: "Bloons TD 4", folder: "bloons-td-4", img: "https://the-pizza-edition-games.github.io/images/bloons-td-4.png" },
-            { id: "bloonstd5", name: "Bloons TD 5", folder: "bloons-td-5", img: "https://the-pizza-edition-games.github.io/images/bloons-td-5.png" },
-            { id: "bobtherobber", name: "Bob the Robber", folder: "bob-the-robber", img: "https://the-pizza-edition-games.github.io/images/bob-the-robber.png" },
-            { id: "boxingrandom", name: "Boxing Random", folder: "boxing-random", img: "https://the-pizza-edition-games.github.io/images/boxing-random.png" },
-            { id: "breakout", name: "Breakout Classic", folder: "breakout", img: "https://the-pizza-edition-games.github.io/images/breakout.png" },
-            { id: "burritobison", name: "Burrito Bison", folder: "burrito-bison", img: "https://the-pizza-edition-games.github.io/images/burrito-bison.png" },
-            { id: "catninja", name: "Cat Ninja", folder: "cat-ninja", img: "https://the-pizza-edition-games.github.io/images/cat-ninja.png" },
-            { id: "chess", name: "Chess Pro", folder: "chess", img: "https://the-pizza-edition-games.github.io/images/chess.png" },
-            { id: "cubefield", name: "Cubefield", folder: "cubefield", img: "https://the-pizza-edition-games.github.io/images/cubefield.png" },
-            { id: "cuttherope", name: "Cut The Rope", folder: "cut-the-rope", img: "https://the-pizza-edition-games.github.io/images/cut-the-rope.png" },
-            { id: "dealornodeal", name: "Deal or No Deal", folder: "deal-or-no-deal", img: "https://the-pizza-edition-games.github.io/images/deal-or-no-deal.png" },
-            { id: "deathrun", name: "Death Run Portable", folder: "death-run", img: "https://the-pizza-edition-games.github.io/images/death-run.png" },
-            { id: "diep-io", name: "Diep.io Offline", folder: "diep-io", img: "https://the-pizza-edition-games.github.io/images/diep-io.png" },
-            { id: "digdug", name: "Dig Dug Retro", folder: "dig-dug", img: "https://the-pizza-edition-games.github.io/images/dig-dug.png" },
-            { id: "dogeminer", name: "Doge Miner", folder: "doge-miner", img: "https://the-pizza-edition-games.github.io/images/doge-miner.png" },
-            { id: "dogeminer2", name: "Doge Miner 2", folder: "doge-miner-2", img: "https://the-pizza-edition-games.github.io/images/doge-miner-2.png" },
-            { id: "donkeykong", name: "Donkey Kong Classic", folder: "donkey-kong", img: "https://the-pizza-edition-games.github.io/images/donkey-kong.png" },
-            { id: "doodlejump", name: "Doodle Jump", folder: "doodle-jump", img: "https://the-pizza-edition-games.github.io/images/doodle-jump.png" },
-            { id: "doom", name: "Doom Classic (1993)", folder: "doom", img: "https://the-pizza-edition-games.github.io/images/doom.png" },
-            { id: "ducklife4", name: "Duck Life 4", folder: "duck-life-4", img: "https://the-pizza-edition-games.github.io/images/duck-life-4.png" },
-            { id: "elasticman", name: "Elastic Man", folder: "elastic-man", img: "https://the-pizza-edition-games.github.io/images/elastic-man.png" },
-            { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison", img: "https://the-pizza-edition-games.github.io/images/escaping-the-prison.png" },
-            { id: "fnae", name: "Five Nights at Epstein's", folder: "CUSTOM_LINK", img: "https://the-pizza-edition-games.github.io/images/default.png", customUrl: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1" }
+            { id: "retrobowl", name: "Retro Bowl", folder: "retrobowl" },
+            { id: "slope", name: "Slope", folder: "slope" },
+            { id: "bitlife", name: "BitLife", folder: "bitlife" },
+            { id: "geometrydash", name: "Geometry Dash", folder: "geometry-dash" },
+            { id: "1v1lol", name: "1v1.LOL", folder: "1v1-lol" },
+            { id: "tunnelrush", name: "Tunnel Rush", folder: "tunnel-rush" },
+            { id: "drivemad", name: "Drive Mad", folder: "drive-mad" },
+            { id: "driftboss", name: "Drift Boss", folder: "drift-boss" },
+            { id: "run3", name: "Run 3", folder: "run-3" },
+            { id: "happywheels", name: "Happy Wheels", folder: "happy-wheels" },
+            { id: "subwaysurfers", name: "Subway Surfers", folder: "subway-surfers" },
+            { id: "cookieclicker", name: "Cookie Clicker", folder: "cookie-clicker" },
+            { id: "minecraft", name: "Minecraft Classic", folder: "minecraft" },
+            { id: "eggycar", name: "Eggy Car", folder: "eggy-car" },
+            { id: "smashkarts", name: "Smash Karts", folder: "smash-karts" },
+            { id: "templerun2", name: "Temple Run 2", folder: "temple-run-2" },
+            { id: "basketballstars", name: "Basketball Stars", folder: "basketball-stars" },
+            { id: "stickmanhook", name: "Stickman Hook", folder: "stickman-hook" },
+            { id: "clustertruck", name: "Clustertruck", folder: "clustertruck" },
+            { id: "snowrider3d", name: "Snow Rider 3D", folder: "snow-rider-3d" },
+            { id: "pizzatower", name: "Pizza Tower", folder: "pizza-tower" },
+            { id: "vex7", name: "Vex 7", folder: "vex-7" },
+            { id: "worldshardestgame", name: "World's Hardest Game", folder: "worlds-hardest-game" },
+            { id: "crossyroad", name: "Crossy Road", folder: "crossy-road" },
+            { id: "amongus", name: "Among Us", folder: "among-us" },
+            { id: "badicecream", name: "Bad Ice Cream", folder: "bad-ice-cream" },
+            { id: "badicecream2", name: "Bad Ice Cream 2", folder: "bad-ice-cream-2" },
+            { id: "badicecream3", name: "Bad Ice Cream 3", folder: "bad-ice-cream-3" },
+            { id: "bindingofisaac", name: "Binding of Isaac", folder: "binding-of-isaac" },
+            { id: "bloonstd4", name: "Bloons TD 4", folder: "bloons-td-4" },
+            { id: "bloonstd5", name: "Bloons TD 5", folder: "bloons-td-5" },
+            { id: "bobtherobber", name: "Bob the Robber", folder: "bob-the-robber" },
+            { id: "boxingrandom", name: "Boxing Random", folder: "boxing-random" },
+            { id: "breakout", name: "Breakout", folder: "breakout" },
+            { id: "burritobison", name: "Burrito Bison", folder: "burrito-bison" },
+            { id: "catninja", name: "Cat Ninja", folder: "cat-ninja" },
+            { id: "chess", name: "Chess", folder: "chess" },
+            { id: "cubefield", name: "Cubefield", folder: "cubefield" },
+            { id: "cuttherope", name: "Cut The Rope", folder: "cut-the-rope" },
+            { id: "dealornodeal", name: "Deal or No Deal", folder: "deal-or-no-deal" },
+            { id: "deathrun", name: "Death Run", folder: "death-run" },
+            { id: "diepio", name: "Diep.io", folder: "diepio" },
+            { id: "digdug", name: "Dig Dug", folder: "dig-dug" },
+            { id: "dogeminer", name: "Doge Miner", folder: "doge-miner" },
+            { id: "dogeminer2", name: "Doge Miner 2", folder: "doge-miner-2" },
+            { id: "donkeykong", name: "Donkey Kong", folder: "donkey-kong" },
+            { id: "doodlejump", name: "Doodle Jump", folder: "doodle-jump" },
+            { id: "doom", name: "Doom", folder: "doom" },
+            { id: "ducklife4", name: "Duck Life 4", folder: "duck-life-4" },
+            { id: "elasticman", name: "Elastic Man", folder: "elastic-man" },
+            { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison" },
+            { id: "fnae", name: "Five Nights at Epstein's", folder: "CUSTOM_LINK", isCustom: true, customUrl: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1" }
         ];
 
         function compileArcadeLibrary() {
@@ -602,13 +602,22 @@
             grid.innerHTML = "";
 
             arcadeLibraryDatabase.forEach(game => {
-                const embedTargetUrl = game.customUrl ? game.customUrl : `https://the-pizza-edition-games.github.io/${game.folder}/`;
+                let actionClick = "";
                 
+                if (game.isCustom) {
+                    // Custom working game loads inside the secure layout viewport frame
+                    actionClick = `loadInternalGame('${game.customUrl}')`;
+                } else {
+                    // Catalog games launch perfectly directly to pizzaedition.win matching addresses
+                    const targetLink = `https://pizzaedition.win/games/${game.folder}/`;
+                    actionClick = `window.open('${targetLink}', '_blank')`;
+                }
+
                 const cardHTML = `
                     <div class="game-card" data-name="${game.name.toLowerCase()}">
-                        <img class="game-thumbnail" src="${game.img}" onerror="this.src='https://the-pizza-edition-games.github.io/images/default.png';" alt="${game.name}">
+                        <div class="title" style="font-size: 1.25rem; margin-top: 30px;">🕹️</div>
                         <div class="title">${game.name}</div>
-                        <button class="btn-play-action" onclick="loadGameEngine('${embedTargetUrl}')">Start Playing!</button>
+                        <button class="btn-play-action" onclick="${actionClick}">Launch Game</button>
                     </div>
                 `;
                 grid.innerHTML += cardHTML;
@@ -653,7 +662,7 @@
             }
         }
 
-        function loadGameEngine(sourceUrl) {
+        function loadInternalGame(sourceUrl) {
             document.getElementById('arcadeFrame').src = sourceUrl;
             document.getElementById('gameViewport').style.display = 'block';
         }
