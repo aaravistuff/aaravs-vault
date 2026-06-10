@@ -7,11 +7,12 @@
     <style>
         /* Root Settings & Theme Colors */
         :root {
-            --sidebar-bg: rgba(20, 18, 24, 0.75);
+            --sidebar-bg: rgba(20, 18, 24, 0.85);
             --sidebar-border: rgba(255, 255, 255, 0.05);
-            --card-bg: rgba(25, 23, 30, 0.6);
-            --card-hover: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(25, 23, 30, 0.65);
+            --card-hover: rgba(255, 255, 255, 0.1);
             --accent-color: #ff7b00; /* Warm orange accent */
+            --arcade-accent: #facc15; /* Moving lines classic yellow */
             --text-main: #ffffff;
             --text-muted: #9aa0a6;
         }
@@ -52,15 +53,15 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            filter: brightness(0.4) contrast(1.1);
+            filter: brightness(0.35) contrast(1.1);
         }
 
         /* --- LEFT SIDEBAR --- */
         aside {
             width: 260px;
             background: var(--sidebar-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-right: 1px solid var(--sidebar-border);
             display: flex;
             flex-direction: column;
@@ -117,6 +118,7 @@
             font-size: 0.95rem;
             transition: all 0.2s ease;
             margin-bottom: 4px;
+            cursor: pointer;
         }
 
         .nav-item:hover, .nav-item.active {
@@ -142,15 +144,24 @@
             transition: background 0.2s;
         }
 
-        /* --- MAIN DESKTOP WORKSPACE --- */
+        /* --- MAIN CONTENT PANELS --- */
         main {
             flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        /* View Layer 1: Home Workspace Desktop */
+        .workspace-view {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Centers the search hub vertically */
-            padding: 40px;
-            position: relative;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
         }
 
         .hub-center {
@@ -195,7 +206,6 @@
             padding: 10px;
         }
 
-        /* Essential Quick Launch Grid */
         .app-grid {
             display: flex;
             justify-content: center;
@@ -239,8 +249,133 @@
             text-align: center;
         }
 
-        .app-tile:hover .app-name {
-            color: white;
+        /* View Layer 2: Black & Animated Yellow Arcade Interface */
+        .arcade-view {
+            display: none; /* Hidden on launch */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d0d11;
+            padding: 40px;
+            overflow-y: auto;
+            z-index: 5;
+        }
+
+        /* Custom Theme Top Decorative Animated Lines Header */
+        .arcade-header {
+            position: relative;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            border-bottom: 4px solid #1a1a24;
+        }
+
+        .arcade-header h2 {
+            font-size: 2rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .moving-lines {
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            height: 4px;
+            width: 150px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--arcade-accent),
+                var(--arcade-accent) 20px,
+                #000 20px,
+                #000 40px
+            );
+            animation: moveLines 1.5s linear infinite;
+        }
+
+        @keyframes moveLines {
+            0% { background-position: 0px; }
+            100% { background-position: 40px; }
+        }
+
+        .arcade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+        }
+
+        .game-card {
+            background: #16161f;
+            border: 2px solid #222230;
+            border-radius: 14px;
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .game-card:hover {
+            border-color: var(--arcade-accent);
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.15);
+        }
+
+        .game-card .icon {
+            font-size: 2.5rem;
+        }
+
+        .game-card .title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        /* Full Window Game Embed Frame Container */
+        .game-player-frame {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 20;
+        }
+
+        .game-player-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-arcade-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #16161f;
+            color: var(--arcade-accent);
+            border: 2px solid #222230;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 25;
+            transition: all 0.2s;
+        }
+
+        .close-arcade-btn:hover {
+            background: var(--arcade-accent);
+            color: #000;
+            border-color: var(--arcade-accent);
         }
     </style>
 </head>
@@ -264,20 +399,9 @@
 
         <div class="nav-section">
             <div class="section-label">Navigation</div>
-            <a href="#" class="nav-item active"><span>🏠</span> Home</a>
-        </div>
-
-        <div class="nav-section">
-            <div class="section-label">Cinema Portals</div>
-            <a href="https://sites.google.com/view/dulotv" target="_blank" class="nav-item"><span>🎬</span> DULO TV Portal</a>
-            <a href="https://sites.google.com/view/dulotv/movies" target="_blank" class="nav-item"><span>🍿</span> Dulo Movies</a>
-        </div>
-
-        <div class="nav-section">
-            <div class="section-label">Arcades</div>
-            <a href="https://thepizzaedition.io/" target="_blank" class="nav-item"><span>🍕</span> Pizza Main</a>
-            <a href="https://the-pizza-edition-online.github.io/pages/retro-bowl.html" target="_blank" class="nav-item"><span>🏈</span> Retro Bowl</a>
-            <a href="https://the-pizza-edition-online.github.io/pages/slope.html" target="_blank" class="nav-item"><span>🟢</span> Slope</a>
+            <div onclick="switchView('home')" id="nav-home" class="nav-item active"><span>🏠</span> Home Workspace</div>
+            <div onclick="switchView('cinema')" id="nav-cinema" class="nav-item"><span>🎬</span> Cinema Hub</div>
+            <div onclick="switchView('arcade')" id="nav-arcade" class="nav-item"><span>🍕</span> Pizza Arcade</div>
         </div>
 
         <div class="sidebar-footer">
@@ -287,47 +411,142 @@
 
     <main>
         
-        <div class="hub-center">
-            <div class="widget-clock" id="liveClock">Welcome</div>
-            <div class="widget-subtitle">Your cinematic web dashboard portal</div>
-
-            <form class="search-container" id="vaultSearchForm" onsubmit="handleVaultSearch(event)">
-                <input type="text" id="vaultSearchInput" placeholder="Search the web or enter a URL...">
-            </form>
+        <div class="game-player-frame" id="gameViewport">
+            <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Game</button>
+            <iframe id="arcadeFrame" src=""></iframe>
         </div>
 
-        <div class="app-grid">
-            <a href="https://www.youtube.com" target="_blank" class="app-tile">
-                <div class="app-icon">📺</div>
-                <div class="app-name">YouTube</div>
-            </a>
-            <a href="https://www.tiktok.com" target="_blank" class="app-tile">
-                <div class="app-icon">🎵</div>
-                <div class="app-name">TikTok</div>
-            </a>
-            <a href="https://www.discord.com" target="_blank" class="app-tile">
-                <div class="app-icon">💬</div>
-                <div class="app-name">Discord</div>
-            </a>
-            <a href="https://www.google.com" target="_blank" class="app-tile">
-                <div class="app-icon">🔍</div>
-                <div class="app-name">Google</div>
-            </a>
-            <a href="https://www.twitch.tv" target="_blank" class="app-tile">
-                <div class="app-icon">🔮</div>
-                <div class="app-name">Twitch</div>
-            </a>
+        <div class="workspace-view" id="view-home-panel">
+            <div class="hub-center">
+                <div class="widget-clock" id="liveClock">Welcome</div>
+                <div class="widget-subtitle">Your cinematic web dashboard portal</div>
+
+                <form class="search-container" id="vaultSearchForm" onsubmit="handleVaultSearch(event)">
+                    <input type="text" id="vaultSearchInput" placeholder="Search the web or enter a URL...">
+                </form>
+            </div>
+
+            <div class="app-grid">
+                <a href="https://www.youtube.com" target="_blank" class="app-tile">
+                    <div class="app-icon">📺</div>
+                    <div class="app-name">YouTube</div>
+                </a>
+                <a href="https://www.tiktok.com" target="_blank" class="app-tile">
+                    <div class="app-icon">🎵</div>
+                    <div class="app-name">TikTok</div>
+                </a>
+                <a href="https://www.discord.com" target="_blank" class="app-tile">
+                    <div class="app-icon">💬</div>
+                    <div class="app-name">Discord</div>
+                </a>
+                <a href="https://www.google.com" target="_blank" class="app-tile">
+                    <div class="app-icon">🔍</div>
+                    <div class="app-name">Google</div>
+                </a>
+                <a href="https://www.twitch.tv" target="_blank" class="app-tile">
+                    <div class="app-icon">🔮</div>
+                    <div class="app-name">Twitch</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="arcade-view" id="view-cinema-panel">
+            <div class="arcade-header">
+                <h2>Cinema Portal Streaming</h2>
+                <div class="moving-lines"></div>
+            </div>
+            <div class="arcade-grid">
+                <a href="https://dulo.tv" target="_blank" style="text-decoration: none;">
+                    <div class="game-card">
+                        <div class="icon">🎬</div>
+                        <div class="title">DULO TV Stream</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="arcade-view" id="view-arcade-panel">
+            <div class="arcade-header">
+                <h2>Pizza Edition Embed Engine</h2>
+                <div class="moving-lines"></div>
+            </div>
+            
+            <div class="arcade-grid">
+                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/retro-bowl.html')">
+                    <div class="icon">🏈</div>
+                    <div class="title">Retro Bowl</div>
+                </div>
+                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/slope.html')">
+                    <div class="icon">🟢</div>
+                    <div class="title">Slope 3D</div>
+                </div>
+                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/bitlife.html')">
+                    <div class="icon">💼</div>
+                    <div class="title">BitLife Sim</div>
+                </div>
+                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/geometry-dash.html')">
+                    <div class="icon">📐</div>
+                    <div class="title">Geometry Dash</div>
+                </div>
+                <a href="https://thepizzaedition.io" target="_blank" style="text-decoration: none;">
+                    <div class="game-card">
+                        <div class="icon">🍕</div>
+                        <div class="title">Open Main Site External</div>
+                    </div>
+                </a>
+            </div>
         </div>
 
     </main>
 
     <script>
-        // Set up the Live Day Tracker
+        // Track Calendar Day
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const currentDay = days[new Date().getDay()];
-        document.getElementById('liveClock').innerText = currentDay;
+        document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-        // Smart Search Box Logic
+        // Smooth Page View Switches
+        function switchView(target) {
+            // Hide all structural views
+            document.getElementById('view-home-panel').style.display = 'none';
+            document.getElementById('view-cinema-panel').style.display = 'none';
+            document.getElementById('view-arcade-panel').style.display = 'none';
+            
+            // Clean up navigation active states
+            document.getElementById('nav-home').classList.remove('active');
+            document.getElementById('nav-cinema').classList.remove('active');
+            document.getElementById('nav-arcade').classList.remove('active');
+
+            // Toggle specified elements active
+            if(target === 'home') {
+                document.getElementById('view-home-panel').style.display = 'flex';
+                document.getElementById('nav-home').classList.add('active');
+            } else if (target === 'cinema') {
+                document.getElementById('view-cinema-panel').style.display = 'block';
+                document.getElementById('nav-cinema').classList.add('active');
+            } else if (target === 'arcade') {
+                document.getElementById('view-arcade-panel').style.display = 'block';
+                document.getElementById('nav-arcade').classList.add('active');
+            }
+        }
+
+        // Embedding Controller Execution
+        function loadGameEngine(sourceUrl) {
+            const playerWindow = document.getElementById('gameViewport');
+            const frameAsset = document.getElementById('arcadeFrame');
+            
+            frameAsset.src = sourceUrl;
+            playerWindow.style.display = 'block';
+        }
+
+        function closeGameEngine() {
+            const playerWindow = document.getElementById('gameViewport');
+            const frameAsset = document.getElementById('arcadeFrame');
+            
+            frameAsset.src = "";
+            playerWindow.style.display = 'none';
+        }
+
+        // Smart Form Input Engine
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
