@@ -11,8 +11,8 @@
             --sidebar-border: rgba(255, 255, 255, 0.05);
             --card-bg: rgba(25, 23, 30, 0.65);
             --card-hover: rgba(255, 255, 255, 0.1);
-            --accent-color: #ff7b00; /* Warm orange accent */
-            --arcade-accent: #facc15; /* Moving lines classic yellow */
+            --accent-color: #ff7b00; 
+            --arcade-accent: #facc15; /* Moving lines yellow */
             --text-main: #ffffff;
             --text-muted: #9aa0a6;
         }
@@ -249,9 +249,9 @@
             text-align: center;
         }
 
-        /* View Layer 2: Black & Animated Yellow Arcade Interface */
+        /* View Layer 2: Custom Arcade View */
         .arcade-view {
-            display: none; /* Hidden on launch */
+            display: none; 
             position: absolute;
             top: 0;
             left: 0;
@@ -263,7 +263,7 @@
             z-index: 5;
         }
 
-        /* Custom Theme Top Decorative Animated Lines Header */
+        /* Custom Theme Animated Yellow Lines Header */
         .arcade-header {
             position: relative;
             padding-bottom: 20px;
@@ -353,29 +353,49 @@
 
         .game-player-frame iframe {
             width: 100%;
-            height: 100%;
+            height: calc(100% - 40px);
             border: none;
+            background: #000;
+        }
+
+        /* Bottom Status Control Bar inside the layout */
+        .game-control-bar {
+            height: 40px;
+            background: #111116;
+            border-top: 2px solid #222230;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: #fff;
+        }
+
+        .embed-credit {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .embed-credit span {
+            color: var(--arcade-accent);
+            font-weight: 600;
         }
 
         .close-arcade-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #16161f;
-            color: var(--arcade-accent);
-            border: 2px solid #222230;
-            padding: 10px 20px;
-            border-radius: 8px;
+            background: transparent;
+            color: #ef4444;
+            border: none;
             cursor: pointer;
             font-weight: bold;
-            z-index: 25;
-            transition: all 0.2s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
         }
 
         .close-arcade-btn:hover {
-            background: var(--arcade-accent);
-            color: #000;
-            border-color: var(--arcade-accent);
+            color: #f87171;
         }
     </style>
 </head>
@@ -401,7 +421,7 @@
             <div class="section-label">Navigation</div>
             <div onclick="switchView('home')" id="nav-home" class="nav-item active"><span>🏠</span> Home Workspace</div>
             <div onclick="switchView('cinema')" id="nav-cinema" class="nav-item"><span>🎬</span> Cinema Hub</div>
-            <div onclick="switchView('arcade')" id="nav-arcade" class="nav-item"><span>🍕</span> Pizza Arcade</div>
+            <div onclick="switchView('arcade')" id="nav-arcade" class="nav-item"><span>🕹️</span> Arcade Vault</div>
         </div>
 
         <div class="sidebar-footer">
@@ -412,8 +432,11 @@
     <main>
         
         <div class="game-player-frame" id="gameViewport">
-            <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Game</button>
             <iframe id="arcadeFrame" src=""></iframe>
+            <div class="game-control-bar">
+                <div class="embed-credit">Arcade Vault // <span>pizza edition embed</span></div>
+                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Game</button>
+            </div>
         </div>
 
         <div class="workspace-view" id="view-home-panel">
@@ -452,7 +475,7 @@
 
         <div class="arcade-view" id="view-cinema-panel">
             <div class="arcade-header">
-                <h2>Cinema Portal Streaming</h2>
+                <h2>Cinema Hub Streaming</h2>
                 <div class="moving-lines"></div>
             </div>
             <div class="arcade-grid">
@@ -467,33 +490,35 @@
 
         <div class="arcade-view" id="view-arcade-panel">
             <div class="arcade-header">
-                <h2>Pizza Edition Embed Engine</h2>
+                <h2>Arcade Vault</h2>
                 <div class="moving-lines"></div>
             </div>
             
             <div class="arcade-grid">
-                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/retro-bowl.html')">
+                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/retro-bowl/')">
                     <div class="icon">🏈</div>
                     <div class="title">Retro Bowl</div>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/slope.html')">
+                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/slope/')">
                     <div class="icon">🟢</div>
                     <div class="title">Slope 3D</div>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/bitlife.html')">
+                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/bitlife/')">
                     <div class="icon">💼</div>
                     <div class="title">BitLife Sim</div>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/pages/geometry-dash.html')">
+                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/geometry-dash/')">
                     <div class="icon">📐</div>
                     <div class="title">Geometry Dash</div>
                 </div>
-                <a href="https://thepizzaedition.io" target="_blank" style="text-decoration: none;">
-                    <div class="game-card">
-                        <div class="icon">🍕</div>
-                        <div class="title">Open Main Site External</div>
-                    </div>
-                </a>
+                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/1v1-lol/')">
+                    <div class="icon">⚔️</div>
+                    <div class="title">1v1.LOL</div>
+                </div>
+                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/tunnel-rush/')">
+                    <div class="icon">🚇</div>
+                    <div class="title">Tunnel Rush</div>
+                </div>
             </div>
         </div>
 
@@ -506,17 +531,14 @@
 
         // Smooth Page View Switches
         function switchView(target) {
-            // Hide all structural views
             document.getElementById('view-home-panel').style.display = 'none';
             document.getElementById('view-cinema-panel').style.display = 'none';
             document.getElementById('view-arcade-panel').style.display = 'none';
             
-            // Clean up navigation active states
             document.getElementById('nav-home').classList.remove('active');
             document.getElementById('nav-cinema').classList.remove('active');
             document.getElementById('nav-arcade').classList.remove('active');
 
-            // Toggle specified elements active
             if(target === 'home') {
                 document.getElementById('view-home-panel').style.display = 'flex';
                 document.getElementById('nav-home').classList.add('active');
@@ -546,7 +568,7 @@
             playerWindow.style.display = 'none';
         }
 
-        // Smart Form Input Engine
+        // Search Input Engine
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
