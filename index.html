@@ -472,7 +472,7 @@
         <div class="game-player-frame" id="gameViewport">
             <iframe id="arcadeFrame" src=""></iframe>
             <div class="game-control-bar">
-                <div class="embed-credit">Arcade Vault // <span>pizza edition embed</span></div>
+                <div class="embed-credit">Arcade Vault // <span>arcade embed framework</span></div>
                 <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Arcade</button>
             </div>
         </div>
@@ -541,7 +541,7 @@
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-       const arcadeLibraryDatabase = [
+        const arcadeLibraryDatabase = [
             // --- FIXED GAME TRACKS (OFFICIAL MIRROR PATHS) ---
             { id: "retrobowl", name: "Retro Bowl", folder: "retro-bowl", img: "https://the-pizza-edition.github.io/images/retro-bowl.png" },
             { id: "slope", name: "Slope 3D", folder: "slope", img: "https://the-pizza-edition.github.io/images/slope.png" },
@@ -595,14 +595,20 @@
             { id: "doom", name: "Doom Classic (1993)", folder: "doom", img: "https://the-pizza-edition.github.io/images/doom.png" },
             { id: "ducklife4", name: "Duck Life 4", folder: "duck-life-4", img: "https://the-pizza-edition.github.io/images/duck-life-4.png" },
             { id: "elasticman", name: "Elastic Man", folder: "elastic-man", img: "https://the-pizza-edition.github.io/images/elastic-man.png" },
-            { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison", img: "https://the-pizza-edition.github.io/images/escaping-the-prison.png" }
+            { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison", img: "https://the-pizza-edition.github.io/images/escaping-the-prison.png" },
+
+            // --- CUSTOM INJECTIONS & NEW GAMES ---
+            { id: "polytrack", name: "PolyTrack", folder: "polytrack", img: "https://the-pizza-edition.github.io/images/polytrack.png" },
+            { id: "fnae", name: "Five Nights at Epstein's", folder: "CUSTOM_LINK", img: "https://the-pizza-edition-online.github.io/images/default.png", customUrl: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1" }
         ];
+
         function compileArcadeLibrary() {
             const grid = document.getElementById('dynamicArcadeGrid');
             grid.innerHTML = "";
 
             arcadeLibraryDatabase.forEach(game => {
-      const embedTargetUrl = `https://rawg.github.io/pages/${game.folder}.html`;
+                // If it's a custom URL use it directly, otherwise build it using the bplus-math mirror path
+                const embedTargetUrl = game.customUrl ? game.customUrl : `https://bplus-math.github.io/${game.folder}/`;
                 
                 const cardHTML = `
                     <div class="game-card" data-name="${game.name.toLowerCase()}">
