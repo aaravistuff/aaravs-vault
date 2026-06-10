@@ -12,7 +12,7 @@
             --card-bg: rgba(25, 23, 30, 0.65);
             --card-hover: rgba(255, 255, 255, 0.1);
             --accent-color: #ff7b00; 
-            --arcade-accent: #facc15; /* Moving lines yellow */
+            --arcade-yellow: #facc15; /* Matching the official yellow button */
             --text-main: #ffffff;
             --text-muted: #9aa0a6;
         }
@@ -154,7 +154,7 @@
             padding: 40px;
         }
 
-        /* View Layer 1: Home Workspace Desktop */
+        /* Workspace Desktop */
         .workspace-view {
             display: flex;
             flex-direction: column;
@@ -249,7 +249,7 @@
             text-align: center;
         }
 
-        /* View Layer 2: Custom Arcade View */
+        /* --- ARCADE VAULT DYNAMIC PANEL --- */
         .arcade-view {
             display: none; 
             position: absolute;
@@ -257,28 +257,35 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0d0d11;
+            background: #111116;
+            /* Recreating the network node background effect from screenshot */
+            background-image: 
+                radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0),
+                radial-gradient(rgba(255, 255, 255, 0.02) 2px, transparent 0);
+            background-size: 40px 40px, 80px 80px;
             padding: 40px;
             overflow-y: auto;
             z-index: 5;
         }
 
-        /* Custom Theme Animated Yellow Lines Header */
+        /* Heading Style with Moving Line Accent */
         .arcade-header {
             position: relative;
             padding-bottom: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
             border-bottom: 4px solid #1a1a24;
         }
 
         .arcade-header h2 {
-            font-size: 2rem;
+            font-size: 2.2rem;
+            font-weight: 800;
             color: #fff;
             text-transform: uppercase;
             letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        }
+
+        .arcade-header h2 span {
+            color: var(--arcade-yellow);
         }
 
         .moving-lines {
@@ -286,15 +293,15 @@
             bottom: -4px;
             left: 0;
             height: 4px;
-            width: 150px;
+            width: 180px;
             background: repeating-linear-gradient(
                 90deg,
-                var(--arcade-accent),
-                var(--arcade-accent) 20px,
+                var(--arcade-yellow),
+                var(--arcade-yellow) 20px,
                 #000 20px,
                 #000 40px
             );
-            animation: moveLines 1.5s linear infinite;
+            animation: moveLines 1.2s linear infinite;
         }
 
         @keyframes moveLines {
@@ -304,42 +311,65 @@
 
         .arcade-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
             gap: 25px;
-            max-width: 1000px;
+            max-width: 1100px;
+            margin-bottom: 40px;
         }
 
         .game-card {
             background: #16161f;
             border: 2px solid #222230;
-            border-radius: 14px;
-            padding: 25px 15px;
+            border-radius: 16px;
+            padding: 30px 20px;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            gap: 15px;
+            height: 220px;
+            transition: all 0.25s ease;
         }
 
         .game-card:hover {
-            border-color: var(--arcade-accent);
-            transform: scale(1.03);
-            box-shadow: 0 0 15px rgba(250, 204, 21, 0.15);
+            border-color: var(--arcade-yellow);
+            box-shadow: 0 0 25px rgba(250, 204, 21, 0.1);
         }
 
         .game-card .icon {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
         }
 
         .game-card .title {
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-weight: 700;
+            font-size: 1.1rem;
             color: #fff;
+            letter-spacing: 0.3px;
         }
 
-        /* Full Window Game Embed Frame Container */
+        /* Precise Yellow Action Trigger from Screenshot */
+        .btn-play-action {
+            background: #facc15;
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .game-card:hover .btn-play-action {
+            background: #fde047;
+            transform: scale(1.02);
+        }
+
+        /* --- IMMERSIVE INTERIOR WINDOW FRAME --- */
         .game-player-frame {
             display: none;
             position: absolute;
@@ -358,27 +388,27 @@
             background: #000;
         }
 
-        /* Bottom Status Control Bar inside the layout */
+        /* Custom Bar Tracking and Credit Text Alignment */
         .game-control-bar {
             height: 40px;
-            background: #111116;
-            border-top: 2px solid #222230;
+            background: #0d0d11;
+            border-top: 2px solid #1e1e2a;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
-            color: #fff;
+            padding: 0 25px;
         }
 
         .embed-credit {
             font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .embed-credit span {
-            color: var(--arcade-accent);
-            font-weight: 600;
+            color: var(--arcade-yellow);
         }
 
         .close-arcade-btn {
@@ -386,11 +416,10 @@
             color: #ef4444;
             border: none;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             transition: color 0.2s;
         }
 
@@ -435,7 +464,7 @@
             <iframe id="arcadeFrame" src=""></iframe>
             <div class="game-control-bar">
                 <div class="embed-credit">Arcade Vault // <span>pizza edition embed</span></div>
-                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Game</button>
+                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Arcade</button>
             </div>
         </div>
 
@@ -483,6 +512,7 @@
                     <div class="game-card">
                         <div class="icon">🎬</div>
                         <div class="title">DULO TV Stream</div>
+                        <button class="btn-play-action">Launch TV</button>
                     </div>
                 </a>
             </div>
@@ -490,34 +520,45 @@
 
         <div class="arcade-view" id="view-arcade-panel">
             <div class="arcade-header">
-                <h2>Arcade Vault</h2>
+                <h2>THE <span>PIZZA EDITION</span> ARCADE VAULT</h2>
                 <div class="moving-lines"></div>
             </div>
             
             <div class="arcade-grid">
-                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/retro-bowl/')">
+                <div class="game-card">
+                    <div class="icon">🍕</div>
+                    <div class="title">All Pizza Games</div>
+                    <button class="btn-play-action" onclick="loadGameEngine('https://the-pizza-edition-online.github.io/')">Start Playing!</button>
+                </div>
+                <div class="game-card">
                     <div class="icon">🏈</div>
                     <div class="title">Retro Bowl</div>
+                    <button class="btn-play-action" onclick="loadGameEngine('https://ubg77.github.io/edit/retro-bowl/')">Start Playing!</button>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/slope/')">
+                <div class="game-card">
                     <div class="icon">🟢</div>
                     <div class="title">Slope 3D</div>
+                    <button class="btn-play-action" onclick="loadGameEngine('https://ubg77.github.io/edit/slope/')">Start Playing!</button>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/bitlife/')">
+                <div class="game-card">
                     <div class="icon">💼</div>
-                    <div class="title">BitLife Sim</div>
+                    <div class="title">BitLife Life Sim</div>
+                    <button class="btn-play-action" onclick="loadGameEngine('https://ubg77.github.io/edit/bitlife/')">Start Playing!</button>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/geometry-dash/')">
+                <div class="game-card">
                     <div class="icon">📐</div>
                     <div class="title">Geometry Dash</div>
+                    <button class="btn-play-action" onclick="loadGameEngine('https://ubg77.github.io/edit/geometry-dash/')">Start Playing!</button>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/1v1-lol/')">
+                <div class="game-card">
                     <div class="icon">⚔️</div>
                     <div class="title">1v1.LOL</div>
+                    <button class="btn-play-action" onclick="loadGameEngine('https://ubg77.github.io/edit/1v1-lol/')">Start Playing!</button>
                 </div>
-                <div class="game-card" onclick="loadGameEngine('https://ubg77.github.io/edit/tunnel-rush/')">
+                <div class="game-card">
                     <div class="icon">🚇</div>
                     <div class="title">Tunnel Rush</div>
+                    <button class="btn-play-action" onclick="loadGameEngine('https://ubg77.github.io/edit/tunnel-rush/')">Start Playing!</button>
                 </div>
             </div>
         </div>
@@ -525,11 +566,11 @@
     </main>
 
     <script>
-        // Track Calendar Day
+        // Synchronize Interface Calendar Readout
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-        // Smooth Page View Switches
+        // Controller Module Routing
         function switchView(target) {
             document.getElementById('view-home-panel').style.display = 'none';
             document.getElementById('view-cinema-panel').style.display = 'none';
@@ -551,7 +592,7 @@
             }
         }
 
-        // Embedding Controller Execution
+        // Window Integration Frame Handlers
         function loadGameEngine(sourceUrl) {
             const playerWindow = document.getElementById('gameViewport');
             const frameAsset = document.getElementById('arcadeFrame');
@@ -568,7 +609,7 @@
             playerWindow.style.display = 'none';
         }
 
-        // Search Input Engine
+        // Command Bar Input Processor
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
