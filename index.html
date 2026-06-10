@@ -117,7 +117,6 @@
             font-size: 0.95rem;
             transition: all 0.2s ease;
             margin-bottom: 4px;
-            cursor: pointer;
         }
 
         .nav-item:hover, .nav-item.active {
@@ -149,22 +148,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center; /* Centers the search hub vertically */
             padding: 40px;
             position: relative;
-            overflow-y: auto;
         }
 
         .hub-center {
             text-align: center;
             width: 100%;
             max-width: 650px;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
         }
 
         .widget-clock {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 400;
             letter-spacing: -1px;
             margin-bottom: 5px;
@@ -172,8 +169,8 @@
 
         .widget-subtitle {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
+            font-size: 1rem;
+            margin-bottom: 35px;
         }
 
         .search-container {
@@ -198,29 +195,14 @@
             padding: 10px;
         }
 
-        /* Group Headings */
-        .grid-header {
-            width: 100%;
-            max-width: 900px;
-            text-align: left;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 30px 0 15px 0;
-            color: var(--accent-color);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 5px;
-        }
-
+        /* Essential Quick Launch Grid */
         .app-grid {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 20px;
             flex-wrap: wrap;
             width: 100%;
-            max-width: 900px;
-            margin-bottom: 20px;
+            max-width: 700px;
         }
 
         .app-tile {
@@ -238,7 +220,6 @@
             color: white;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             gap: 8px;
-            cursor: pointer;
         }
 
         .app-tile:hover {
@@ -249,53 +230,17 @@
         }
 
         .app-icon {
-            font-size: 2rem;
+            font-size: 2.2rem;
         }
 
         .app-name {
             font-size: 0.8rem;
             color: var(--text-muted);
             text-align: center;
-            padding: 0 5px;
         }
 
-        /* --- OVERLAY WINDOW PLAYER --- */
-        .game-screen {
-            position: fixed;
-            top: 0;
-            left: 260px; 
-            width: calc(100% - 260px);
-            height: 100%;
-            background: #000;
-            z-index: 20;
-            display: none; 
-            overflow: hidden;
-        }
-
-        .game-screen iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .close-game-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(239, 68, 68, 0.8);
+        .app-tile:hover .app-name {
             color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            z-index: 21;
-            font-size: 0.85rem;
-            transition: background 0.2s;
-        }
-
-        .close-game-btn:hover {
-            background: rgb(239, 68, 68);
         }
     </style>
 </head>
@@ -318,10 +263,21 @@
         </div>
 
         <div class="nav-section">
-            <div class="section-label">Entertainment</div>
-            <div class="nav-item active" onclick="closeContent()"><span>🏠</span> Home</div>
-            <a href="#cinema-sec" class="nav-item"><span>🎬</span> Cinema Hub</a>
-            <a href="#games-sec" class="nav-item"><span>🍕</span> Pizza Arcade</a>
+            <div class="section-label">Navigation</div>
+            <a href="#" class="nav-item active"><span>🏠</span> Home</a>
+        </div>
+
+        <div class="nav-section">
+            <div class="section-label">Cinema Portals</div>
+            <a href="https://sites.google.com/view/dulotv" target="_blank" class="nav-item"><span>🎬</span> DULO TV Portal</a>
+            <a href="https://sites.google.com/view/dulotv/movies" target="_blank" class="nav-item"><span>🍿</span> Dulo Movies</a>
+        </div>
+
+        <div class="nav-section">
+            <div class="section-label">Arcades</div>
+            <a href="https://thepizzaedition.io/" target="_blank" class="nav-item"><span>🍕</span> Pizza Main</a>
+            <a href="https://the-pizza-edition-online.github.io/pages/retro-bowl.html" target="_blank" class="nav-item"><span>🏈</span> Retro Bowl</a>
+            <a href="https://the-pizza-edition-online.github.io/pages/slope.html" target="_blank" class="nav-item"><span>🟢</span> Slope</a>
         </div>
 
         <div class="sidebar-footer">
@@ -331,11 +287,6 @@
 
     <main>
         
-        <div class="game-screen" id="vaultViewerWindow">
-            <button class="close-game-btn" onclick="closeContent()">✕ Close Window</button>
-            <iframe id="viewerFrame" src=""></iframe>
-        </div>
-
         <div class="hub-center">
             <div class="widget-clock" id="liveClock">Welcome</div>
             <div class="widget-subtitle">Your cinematic web dashboard portal</div>
@@ -345,36 +296,27 @@
             </form>
         </div>
 
-        <div class="grid-header" id="games-sec">The Pizza Edition Arcade</div>
         <div class="app-grid">
-            <div onclick="launchContent('https://thepizzaeditiongames.github.io/')" class="app-tile">
-                <div class="app-icon">🍕</div>
-                <div class="app-name">Pizza Main</div>
-            </div>
-            <div onclick="launchContent('https://thepizzaeditiongames.github.io/retro-bowl/')" class="app-tile">
-                <div class="app-icon">🏈</div>
-                <div class="app-name">Retro Bowl</div>
-            </div>
-            <div onclick="launchContent('https://thepizzaeditiongames.github.io/slope/')" class="app-tile">
-                <div class="app-icon">🟢</div>
-                <div class="app-name">Slope</div>
-            </div>
-            <div onclick="launchContent('https://thepizzaeditiongames.github.io/bitlife/')" class="app-tile">
-                <div class="app-icon">💼</div>
-                <div class="app-name">BitLife</div>
-            </div>
-        </div>
-
-        <div class="grid-header" id="cinema-sec">Dulo TV Media Portal</div>
-        <div class="app-grid">
-            <div onclick="launchContent('https://sites.google.com/view/dulotv')" class="app-tile">
-                <div class="app-icon">🎬</div>
-                <div class="app-name">DULO TV</div>
-            </div>
-            <div onclick="launchContent('https://sites.google.com/view/dulotv/movies')" class="app-tile">
-                <div class="app-icon">🍿</div>
-                <div class="app-name">Dulo Movies</div>
-            </div>
+            <a href="https://www.youtube.com" target="_blank" class="app-tile">
+                <div class="app-icon">📺</div>
+                <div class="app-name">YouTube</div>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="app-tile">
+                <div class="app-icon">🎵</div>
+                <div class="app-name">TikTok</div>
+            </a>
+            <a href="https://www.discord.com" target="_blank" class="app-tile">
+                <div class="app-icon">💬</div>
+                <div class="app-name">Discord</div>
+            </a>
+            <a href="https://www.google.com" target="_blank" class="app-tile">
+                <div class="app-icon">🔍</div>
+                <div class="app-name">Google</div>
+            </a>
+            <a href="https://www.twitch.tv" target="_blank" class="app-tile">
+                <div class="app-icon">🔮</div>
+                <div class="app-name">Twitch</div>
+            </a>
         </div>
 
     </main>
@@ -385,24 +327,7 @@
         const currentDay = days[new Date().getDay()];
         document.getElementById('liveClock').innerText = currentDay;
 
-        // Content Control Engine
-        function launchContent(url) {
-            const windowOverlay = document.getElementById('vaultViewerWindow');
-            const iframe = document.getElementById('viewerFrame');
-            
-            iframe.src = url; 
-            windowOverlay.style.display = 'block'; 
-        }
-
-        function closeContent() {
-            const windowOverlay = document.getElementById('vaultViewerWindow');
-            const iframe = document.getElementById('viewerFrame');
-            
-            iframe.src = ""; 
-            windowOverlay.style.display = 'none'; 
-        }
-
-        // Smart Input Logic
+        // Smart Search Box Logic
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
@@ -415,7 +340,7 @@
                 if (!/^https?:\/\//i.test(input)) {
                     finalUrl = 'https://' + input;
                 }
-                launchContent(finalUrl); 
+                window.open(finalUrl, '_blank'); 
             } else {
                 const searchUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
                 window.open(searchUrl, '_blank');
