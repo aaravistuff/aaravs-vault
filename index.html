@@ -250,7 +250,6 @@
             width: 100%;
             height: 100%;
             background: #111116;
-            /* Geometric mesh styling matching screenshot network */
             background-image: 
                 radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0),
                 radial-gradient(rgba(255, 255, 255, 0.02) 2px, transparent 0);
@@ -348,7 +347,6 @@
             box-shadow: 0 0 25px rgba(250, 204, 21, 0.1);
         }
 
-        /* Actual high res game graphic asset placeholder styling */
         .game-thumbnail {
             width: 100%;
             height: 110px;
@@ -368,7 +366,6 @@
             width: 100%;
         }
 
-        /* Yellow Button from your Screenshot */
         .btn-play-action {
             background: #facc15;
             color: #000;
@@ -472,7 +469,7 @@
         <div class="game-player-frame" id="gameViewport">
             <iframe id="arcadeFrame" src=""></iframe>
             <div class="game-control-bar">
-                <div class="embed-credit">Arcade Vault // <span>pizza edition embed</span></div>
+                <div class="embed-credit">Arcade Vault // <span>Engine Active</span></div>
                 <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Arcade</button>
             </div>
         </div>
@@ -541,49 +538,88 @@
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-        // Central High-Volume Asset Matrix Repository 
-        // Add as many items here as you want; the engine generates them automatically with genuine web thumbnails.
+        // EXTENDED MATRIX REPOSITORY (60+ games structured dynamically)
         const arcadeLibraryDatabase = [
-            { id: "retrobowl", name: "Retro Bowl", folder: "retro-bowl", img: "https://the-pizza-edition-online.github.io/images/retro-bowl.png" },
-            { id: "slope", name: "Slope 3D", folder: "slope", img: "https://the-pizza-edition-online.github.io/images/slope.png" },
-            { id: "bitlife", name: "BitLife Sim", folder: "bitlife", img: "https://the-pizza-edition-online.github.io/images/bitlife.png" },
-            { id: "geometrydash", name: "Geometry Dash", folder: "geometry-dash", img: "https://the-pizza-edition-online.github.io/images/geometry-dash.png" },
-            { id: "1v1lol", name: "1v1.LOL", folder: "1v1-lol", img: "https://the-pizza-edition-online.github.io/images/1v1-lol.png" },
-            { id: "tunnelrush", name: "Tunnel Rush", folder: "tunnel-rush", img: "https://the-pizza-edition-online.github.io/images/tunnel-rush.png" },
-            { id: "drivemad", name: "Drive Mad", folder: "drive-mad", img: "https://the-pizza-edition-online.github.io/images/drive-mad.png" },
-            { id: "driftboss", name: "Drift Boss", folder: "drift-boss", img: "https://the-pizza-edition-online.github.io/images/drift-boss.png" },
-            { id: "run3", name: "Run 3", folder: "run-3", img: "https://the-pizza-edition-online.github.io/images/run-3.png" },
-            { id: "happywheels", name: "Happy Wheels", folder: "happy-wheels", img: "https://the-pizza-edition-online.github.io/images/happy-wheels.png" },
-            { id: "subwaysurfers", name: "Subway Surfers", folder: "subway-surfers", img: "https://the-pizza-edition-online.github.io/images/subway-surfers.png" },
-            { id: "cookieclicker", name: "Cookie Clicker", folder: "cookie-clicker", img: "https://the-pizza-edition-online.github.io/images/cookie-clicker.png" },
-            { id: "minecraft", name: "Minecraft Classic", folder: "minecraft", img: "https://the-pizza-edition-online.github.io/images/minecraft.png" },
-            { id: "eggycar", name: "Eggy Car", folder: "eggy-car", img: "https://the-pizza-edition-online.github.io/images/eggy-car.png" },
-            { id: "smashkarts", name: "Smash Karts", folder: "smash-karts", img: "https://the-pizza-edition-online.github.io/images/smash-karts.png" },
-            { id: "templerun2", name: "Temple Run 2", folder: "temple-run-2", img: "https://the-pizza-edition-online.github.io/images/temple-run-2.png" },
-            { id: "basketballstars", name: "Basketball Stars", folder: "basketball-stars", img: "https://the-pizza-edition-online.github.io/images/basketball-stars.png" },
-            { id: "stickmanhook", name: "Stickman Hook", folder: "stickman-hook", img: "https://the-pizza-edition-online.github.io/images/stickman-hook.png" },
-            { id: "clusterstruck", name: "Clustertruck", folder: "clustertruck", img: "https://the-pizza-edition-online.github.io/images/clustertruck.png" },
-            { id: "snowrider3d", name: "Snow Rider 3D", folder: "snow-rider-3d", img: "https://the-pizza-edition-online.github.io/images/snow-rider-3d.png" },
-            { id: "pizzatower", name: "Pizza Tower Mod", folder: "pizza-tower", img: "https://the-pizza-edition-online.github.io/images/pizza-tower.png" },
-            { id: "vex7", name: "Vex 7", folder: "vex-7", img: "https://the-pizza-edition-online.github.io/images/vex-7.png" },
-            { id: "worldshardestgame", name: "World's Hardest Game", folder: "worlds-hardest-game", img: "https://the-pizza-edition-online.github.io/images/worlds-hardest-game.png" },
-            { id: "crossyroad", name: "Crossy Road", folder: "crossy-road", img: "https://the-pizza-edition-online.github.io/images/crossy-road.png" }
+            { name: "Retro Bowl", url: "https://retrobowlgame.org/retro-bowl.embed", img: "https://the-pizza-edition-online.github.io/images/retro-bowl.png" },
+            { name: "Slope 3D", url: "https://slopegame.online/slope-game.embed", img: "https://the-pizza-edition-online.github.io/images/slope.png" },
+            { name: "BitLife Sim", url: "https://bitlifeonline.com/bitlife.embed", img: "https://the-pizza-edition-online.github.io/images/bitlife.png" },
+            { name: "Geometry Dash", url: "https://geometrydash.io/geometry-dash.embed", img: "https://the-pizza-edition-online.github.io/images/geometry-dash.png" },
+            { name: "1v1.LOL", url: "https://1v1.lol/", img: "https://the-pizza-edition-online.github.io/images/1v1-lol.png" },
+            { name: "Tunnel Rush", url: "https://the-pizza-edition-online.github.io/pages/tunnel-rush.html", img: "https://the-pizza-edition-online.github.io/images/tunnel-rush.png" },
+            { name: "Drive Mad", url: "https://the-pizza-edition-online.github.io/pages/drive-mad.html", img: "https://the-pizza-edition-online.github.io/images/drive-mad.png" },
+            { name: "Drift Boss", url: "https://the-pizza-edition-online.github.io/pages/drift-boss.html", img: "https://the-pizza-edition-online.github.io/images/drift-boss.png" },
+            { name: "Run 3", url: "https://the-pizza-edition-online.github.io/pages/run-3.html", img: "https://the-pizza-edition-online.github.io/images/run-3.png" },
+            { name: "Happy Wheels", url: "https://happywheels.org/happy-wheels.embed", img: "https://the-pizza-edition-online.github.io/images/happy-wheels.png" },
+            { name: "Subway Surfers", url: "https://subway-surfers.org/subway-surfers.embed", img: "https://the-pizza-edition-online.github.io/images/subway-surfers.png" },
+            { name: "Cookie Clicker", url: "https://cookie-clicker2.github.io/", img: "https://the-pizza-edition-online.github.io/images/cookie-clicker.png" },
+            { name: "Minecraft Classic", url: "https://classic.minecraft.net/", img: "https://the-pizza-edition-online.github.io/images/minecraft.png" },
+            { name: "Eggy Car", url: "https://the-pizza-edition-online.github.io/pages/eggy-car.html", img: "https://the-pizza-edition-online.github.io/images/eggy-car.png" },
+            { name: "Smash Karts", url: "https://smashkarts.io/", img: "https://the-pizza-edition-online.github.io/images/smash-karts.png" },
+            { name: "Temple Run 2", url: "https://the-pizza-edition-online.github.io/pages/temple-run-2.html", img: "https://the-pizza-edition-online.github.io/images/temple-run-2.png" },
+            { name: "Basketball Stars", url: "https://the-pizza-edition-online.github.io/pages/basketball-stars.html", img: "https://the-pizza-edition-online.github.io/images/basketball-stars.png" },
+            { name: "Stickman Hook", url: "https://the-pizza-edition-online.github.io/pages/stickman-hook.html", img: "https://the-pizza-edition-online.github.io/images/stickman-hook.png" },
+            { name: "Clustertruck", url: "https://the-pizza-edition-online.github.io/pages/clustertruck.html", img: "https://the-pizza-edition-online.github.io/images/clustertruck.png" },
+            { name: "Snow Rider 3D", url: "https://the-pizza-edition-online.github.io/pages/snow-rider-3d.html", img: "https://the-pizza-edition-online.github.io/images/snow-rider-3d.png" },
+            { name: "Pizza Tower Mod", url: "https://the-pizza-edition-online.github.io/pages/pizza-tower.html", img: "https://the-pizza-edition-online.github.io/images/pizza-tower.png" },
+            { name: "Vex 7", url: "https://the-pizza-edition-online.github.io/pages/vex-7.html", img: "https://the-pizza-edition-online.github.io/images/vex-7.png" },
+            { name: "World's Hardest Game", url: "https://the-pizza-edition-online.github.io/pages/worlds-hardest-game.html", img: "https://the-pizza-edition-online.github.io/images/worlds-hardest-game.png" },
+            { name: "Crossy Road", url: "https://the-pizza-edition-online.github.io/pages/crossy-road.html", img: "https://the-pizza-edition-online.github.io/images/crossy-road.png" },
+            
+            // New Additions
+            { name: "Pac-Man", url: "https://play.pacman.com/", img: "https://upload.wikimedia.org/wikipedia/commons/0/06/Pac-Man_Infobox_Art.png" },
+            { name: "HaxBall", url: "https://haxball.com/", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Drift Hunters", url: "https://drift-hunters.io/drift-hunters.embed", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Friday Night Funkin'", url: "https://v6p9d9t4.ssl.hwcdn.net/html/1907406/index.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Shell Shockers", url: "https://shellshock.io/", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Getaway Shootout", url: "https://the-pizza-edition-online.github.io/pages/getaway-shootout.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Rooftop Snipers", url: "https://the-pizza-edition-online.github.io/pages/rooftop-snipers.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Soccer Random", url: "https://the-pizza-edition-online.github.io/pages/soccer-random.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Boxing Random", url: "https://the-pizza-edition-online.github.io/pages/boxing-random.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Basket Random", url: "https://the-pizza-edition-online.github.io/pages/basket-random.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Vex 6", url: "https://the-pizza-edition-online.github.io/pages/vex-6.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Vex 5", url: "https://the-pizza-edition-online.github.io/pages/vex-5.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Vex 4", url: "https://the-pizza-edition-online.github.io/pages/vex-4.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Bad Ice Cream", url: "https://the-pizza-edition-online.github.io/pages/bad-ice-cream.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Bad Ice Cream 2", url: "https://the-pizza-edition-online.github.io/pages/bad-ice-cream-2.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Bad Ice Cream 3", url: "https://the-pizza-edition-online.github.io/pages/bad-ice-cream-3.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Burrito Bison", url: "https://the-pizza-edition-online.github.io/pages/burrito-bison.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Papashouria", url: "https://the-pizza-edition-online.github.io/pages/papas-pizzeria.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Papa's Burgeria", url: "https://the-pizza-edition-online.github.io/pages/papas-burgeria.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Papa's Freezeria", url: "https://the-pizza-edition-online.github.io/pages/papas-freezeria.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Papa's Taco Mia", url: "https://the-pizza-edition-online.github.io/pages/papas-taco-mia.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Blades of Chance", url: "https://the-pizza-edition-online.github.io/pages/blades-of-chance.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Duck Life", url: "https://the-pizza-edition-online.github.io/pages/duck-life.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Duck Life 2", url: "https://the-pizza-edition-online.github.io/pages/duck-life-2.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Duck Life 3", url: "https://the-pizza-edition-online.github.io/pages/duck-life-3.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Duck Life 4", url: "https://the-pizza-edition-online.github.io/pages/duck-life-4.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Cubefield", url: "https://the-pizza-edition-online.github.io/pages/cubefield.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "OvO", url: "https://the-pizza-edition-online.github.io/pages/ovo.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Just Fall.LOL", url: "https://justfall.lol/", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Zombs Royale", url: "https://zombsroyale.io/", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "BuildNow GG", url: "https://buildnow.gg/", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Madalin Stunt Cars 2", url: "https://the-pizza-edition-online.github.io/pages/madalin-stunt-cars-2.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Madalin Cars Multiplayer", url: "https://the-pizza-edition-online.github.io/pages/madalin-cars-multiplayer.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Stick War Legacy", url: "https://the-pizza-edition-online.github.io/pages/stick-war.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Idle Dice", url: "https://the-pizza-edition-online.github.io/pages/idle-dice.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Doodle Jump", url: "https://the-pizza-edition-online.github.io/pages/doodle-jump.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Helix Jump", url: "https://the-pizza-edition-online.github.io/pages/helix-jump.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Moto X3M", url: "https://the-pizza-edition-online.github.io/pages/moto-x3m.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Moto X3M Pool Party", url: "https://the-pizza-edition-online.github.io/pages/moto-x3m-pool-party.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Moto X3M Spooky Land", url: "https://the-pizza-edition-online.github.io/pages/moto-x3m-spooky-land.html", img: "https://the-pizza-edition-online.github.io/images/default.png" },
+            { name: "Moto X3M Winter", url: "https://the-pizza-edition-online.github.io/pages/moto-x3m-winter.html", img: "https://the-pizza-edition-online.github.io/images/default.png" }
         ];
 
-        // Bulk Generator Engine: Multiplies entries to quickly create a massive 100+ game list dynamically
+        // Bulk Generator Engine: Loops matrix object and safely maps URLs
         function compileArcadeLibrary() {
             const grid = document.getElementById('dynamicArcadeGrid');
             grid.innerHTML = "";
 
-            // Loop and render the structural core cards
             arcadeLibraryDatabase.forEach(game => {
-                const embedTargetUrl = `https://the-pizza-edition-online.github.io/pages/${game.folder}.html`;
-                
                 const cardHTML = `
                     <div class="game-card" data-name="${game.name.toLowerCase()}">
                         <img class="game-thumbnail" src="${game.img}" onerror="this.src='https://the-pizza-edition-online.github.io/images/default.png';" alt="${game.name}">
                         <div class="title">${game.name}</div>
-                        <button class="btn-play-action" onclick="loadGameEngine('${embedTargetUrl}')">Start Playing!</button>
+                        <button class="btn-play-action" onclick="loadGameEngine('${game.url}')">Start Playing!</button>
                     </div>
                 `;
                 grid.innerHTML += cardHTML;
