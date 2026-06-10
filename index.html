@@ -40,19 +40,19 @@
             height: 100vh;
             z-index: -1;
             overflow: hidden;
-            pointer-events: none; /* Prevents clicking the video background */
+            pointer-events: none;
         }
 
         .wallpaper-bg-container iframe {
             width: 100vw;
-            height: 56.25vw; /* Fixed aspect ratio to stretch wide */
+            height: 56.25vw;
             min-height: 100vh;
             min-width: 177.77vh; 
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            filter: brightness(0.4) contrast(1.1); /* darkens to make text pop */
+            filter: brightness(0.4) contrast(1.1);
         }
 
         /* --- LEFT SIDEBAR --- */
@@ -117,6 +117,7 @@
             font-size: 0.95rem;
             transition: all 0.2s ease;
             margin-bottom: 4px;
+            cursor: pointer;
         }
 
         .nav-item:hover, .nav-item.active {
@@ -142,26 +143,23 @@
             transition: background 0.2s;
         }
 
-        .btn-discord:hover {
-            background: rgba(88, 101, 242, 0.3);
-        }
-
-        /* --- MAIN DESKTOP AREA --- */
+        /* --- MAIN DESKTOP WORKSPACE --- */
         main {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 40px;
             position: relative;
+            overflow-y: auto; /* Allows scrolling through lists */
         }
 
-        /* Center Hub Content */
         .hub-center {
             text-align: center;
             width: 100%;
             max-width: 650px;
+            margin-top: 40px;
             margin-bottom: 40px;
         }
 
@@ -178,7 +176,6 @@
             margin-bottom: 30px;
         }
 
-        /* Smart Search Bar Pill */
         .search-container {
             width: 100%;
             background: rgba(20, 20, 25, 0.7);
@@ -201,47 +198,37 @@
             padding: 10px;
         }
 
-        /* Category Filter Pills */
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--text-main);
-        }
-
-        .pill:hover, .pill.active {
-            background: var(--accent-color);
-            color: black;
+        /* Group Headings */
+        .grid-header {
+            width: 100%;
+            max-width: 900px;
+            text-align: left;
+            font-size: 1.1rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 30px 0 15px 0;
+            color: var(--accent-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
         }
 
-        /* App Grid Shortcuts */
         .app-grid {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 20px;
             flex-wrap: wrap;
             width: 100%;
             max-width: 900px;
+            margin-bottom: 20px;
         }
 
         .app-tile {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border-radius: 18px;
             display: flex;
             flex-direction: column;
@@ -251,6 +238,7 @@
             color: white;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             gap: 8px;
+            cursor: pointer;
         }
 
         .app-tile:hover {
@@ -261,16 +249,53 @@
         }
 
         .app-icon {
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
 
         .app-name {
             font-size: 0.8rem;
             color: var(--text-muted);
+            text-align: center;
+            padding: 0 5px;
         }
 
-        .app-tile:hover .app-name {
+        /* --- OVERLAY WINDOW PLAYER --- */
+        .game-screen {
+            position: fixed;
+            top: 0;
+            left: 260px; /* Aligns right next to the sidebar */
+            width: calc(100% - 260px);
+            height: 100%;
+            background: #000;
+            z-index: 20;
+            display: none; 
+            overflow: hidden;
+        }
+
+        .game-screen iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-game-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(239, 68, 68, 0.8);
             color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 21;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+
+        .close-game-btn:hover {
+            background: rgb(239, 68, 68);
         }
     </style>
 </head>
@@ -294,15 +319,15 @@
 
         <div class="nav-section">
             <div class="section-label">Entertainment</div>
-            <a href="#" class="nav-item active"><span>🏠</span> Home</a>
-            <a href="#" class="nav-item"><span>🎬</span> Cinema</a>
-            <a href="#" class="nav-item"><span>🎮</span> Games</a>
-            <a href="#" class="nav-item"><span>🕹️</span> Emulator</a>
+            <div class="nav-item active" onclick="closeContent()"><span>🏠</span> Home</div>
+            <a href="#cinema-sec" class="nav-item"><span>🎬</span> Cinema</a>
+            <a href="#games-sec" class="nav-item"><span>🎮</span> Games</a>
         </div>
 
         <div class="nav-section">
-            <div class="section-label">Tools</div>
-            <a href="#" class="nav-item"><span>🌐</span> Browser Proxy</a>
+            <div class="section-label">External links</div>
+            <a href="https://youtube.com" target="_blank" class="nav-item"><span>📺</span> YouTube</a>
+            <a href="https://discord.com" target="_blank" class="nav-item"><span>💬</span> Discord</a>
         </div>
 
         <div class="sidebar-footer">
@@ -312,6 +337,11 @@
 
     <main>
         
+        <div class="game-screen" id="vaultViewerWindow">
+            <button class="close-game-btn" onclick="closeContent()">✕ Close Window</button>
+            <iframe id="viewerFrame" src=""></iframe>
+        </div>
+
         <div class="hub-center">
             <div class="widget-clock" id="liveClock">Welcome</div>
             <div class="widget-subtitle">Your cinematic web dashboard portal</div>
@@ -319,54 +349,75 @@
             <form class="search-container" id="vaultSearchForm" onsubmit="handleVaultSearch(event)">
                 <input type="text" id="vaultSearchInput" placeholder="Search the web or enter a URL...">
             </form>
+        </div>
 
-            <div class="categories">
-                <div class="pill active">Popular</div>
-                <div class="pill">Games</div>
-                <div class="pill">Media</div>
-                <div class="pill">Apps</div>
+        <div class="grid-header" id="games-sec">Featured Games</div>
+        <div class="app-grid">
+            <div onclick="launchContent('https://play.pacman.com/')" class="app-tile">
+                <div class="app-icon">🕹️</div>
+                <div class="app-name">Pac-Man</div>
+            </div>
+            <div onclick="launchContent('https://classic.minecraft.net/')" class="app-tile">
+                <div class="app-icon">🧱</div>
+                <div class="app-name">Minecraft</div>
+            </div>
+            <div onclick="launchContent('https://www.google.com/logos/2010/pacman10-hp.html')" class="app-tile">
+                <div class="app-icon">👾</div>
+                <div class="app-name">Google Arcade</div>
+            </div>
+            <div onclick="launchContent('https://haxball.com/')" class="app-tile">
+                <div class="app-icon">⚽</div>
+                <div class="app-name">HaxBall</div>
             </div>
         </div>
 
+        <div class="grid-header" id="cinema-sec">Cinema & Media</div>
         <div class="app-grid">
-            <a href="https://youtube.com" target="_blank" class="app-tile">
-                <div class="app-icon">📺</div>
-                <div class="app-name">YouTube</div>
-            </a>
-            <a href="https://reddit.com" target="_blank" class="app-tile">
-                <div class="app-icon">🤖</div>
-                <div class="app-name">Reddit</div>
-            </a>
-            <a href="https://google.com" target="_blank" class="app-tile">
-                <div class="app-icon">🔍</div>
-                <div class="app-name">Google</div>
-            </a>
-            <a href="https://spotify.com" target="_blank" class="app-tile">
-                <div class="app-icon">🎵</div>
-                <div class="app-name">Spotify</div>
-            </a>
-            <a href="https://discord.com" target="_blank" class="app-tile">
-                <div class="app-icon">💬</div>
-                <div class="app-name">Discord</div>
-            </a>
+            <div onclick="launchContent('https://www.youtube.com/embed/aqz-KE-bpKQ')" class="app-tile">
+                <div class="app-icon">🌌</div>
+                <div class="app-name">4K Space Lo-Fi</div>
+            </div>
+            <div onclick="launchContent('https://www.youtube.com/embed/jfKfPfyJRdk')" class="app-tile">
+                <div class="app-icon">🌿</div>
+                <div class="app-name">Nature Relax</div>
+            </div>
+            <div onclick="launchContent('https://www.youtube.com/embed/live_stream?channel=UC4R8DWoMoI7CAwX8_LjQHig')" class="app-tile">
+                <div class="app-icon">📰</div>
+                <div class="app-name">Live Stream</div>
+            </div>
         </div>
 
     </main>
 
     <script>
-        // Set up the Live Day Tracker for the greeting widget
+        // Set up the Live Day Tracker
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const currentDay = days[new Date().getDay()];
         document.getElementById('liveClock').innerText = currentDay;
 
-        // Process search submissions smartly
+        // Content Control Engine
+        function launchContent(url) {
+            const windowOverlay = document.getElementById('vaultViewerWindow');
+            const iframe = document.getElementById('viewerFrame');
+            
+            iframe.src = url; 
+            windowOverlay.style.display = 'block'; 
+        }
+
+        function closeContent() {
+            const windowOverlay = document.getElementById('vaultViewerWindow');
+            const iframe = document.getElementById('viewerFrame');
+            
+            iframe.src = ""; 
+            windowOverlay.style.display = 'none'; 
+        }
+
+        // Smart Proxy / Search Input Logic
         function handleVaultSearch(event) {
             event.preventDefault();
-            
             const input = document.getElementById('vaultSearchInput').value.trim();
             if (!input) return;
 
-            // Regex checking format for standard dot domain URLs
             const isUrl = input.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/) || input.startsWith('http');
 
             if (isUrl) {
@@ -374,7 +425,7 @@
                 if (!/^https?:\/\//i.test(input)) {
                     finalUrl = 'https://' + input;
                 }
-                window.open(finalUrl, '_blank');
+                launchContent(finalUrl); 
             } else {
                 const searchUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
                 window.open(searchUrl, '_blank');
