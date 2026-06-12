@@ -486,7 +486,7 @@
                 <div class="widget-clock" id="liveClock">Welcome</div>
                 <div class="widget-subtitle">Your cinematic web dashboard portal</div>
                 <form class="search-container" id="vaultSearchForm" onsubmit="handleVaultSearch(event)">
-                    <input type="text" id="vaultSearchInput" placeholder="Search the web securely via Ultraviolet...">
+                    <input type="text" id="vaultSearchInput" placeholder="TikTok, Netflix, YouTube or search anything... (proxied via UV)">
                 </form>
             </div>
 
@@ -494,8 +494,8 @@
                 <a href="https://www.youtube.com" target="_blank" class="app-tile">
                     <div class="app-icon">📺</div><div class="app-name">YouTube</div>
                 </a>
-                <a href="https://www.tiktok.com" target="_blank" class="app-tile">
-                    <div class="app-icon">🎵</div><div class="app-name">TikTok</div>
+                <a onclick="launchProxiedTikTok()" class="app-tile" style="cursor:pointer;">
+                    <div class="app-icon">🎵</div><div class="app-name">TikTok (Unblocked)</div>
                 </a>
                 <a href="https://www.discord.com" target="_blank" class="app-tile">
                     <div class="app-icon">💬</div><div class="app-name">Discord</div>
@@ -506,6 +506,12 @@
                 <a href="https://www.twitch.tv" target="_blank" class="app-tile">
                     <div class="app-icon">🔮</div><div class="app-name">Twitch</div>
                 </a>
+            </div>
+
+            <div style="display:flex; gap:12px; margin-top:25px; justify-content:center; flex-wrap:wrap;">
+                <button onclick="launchProxiedTikTok()" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎵 TikTok Unblocked</button>
+                <button onclick="proxySite('https://www.netflix.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎬 Netflix</button>
+                <button onclick="proxySite('https://www.youtube.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">📺 YouTube</button>
             </div>
         </div>
 
@@ -672,6 +678,27 @@
         function closeGameEngine() {
             document.getElementById('arcadeFrame').src = "";
             document.getElementById('gameViewport').style.display = 'none';
+        }
+
+        /* PROXY QUICK LAUNCHERS - TikTok + Movies */
+        function launchProxiedTikTok() {
+            const tiktokUrl = "https://www.tiktok.com";
+            proxySite(tiktokUrl);
+        }
+
+        function proxySite(url) {
+            if (typeof __uv$config !== 'undefined' && navigator.serviceWorker) {
+                navigator.serviceWorker.register('/uv.sw.js', {
+                    scope: __uv$config.prefix
+                }).then(() => {
+                    const proxied = __uv$config.prefix + __uv$config.encodeUrl(url);
+                    loadInternalGame(proxied);
+                }).catch(() => {
+                    window.open(url, '_blank');
+                });
+            } else {
+                window.open(url, '_blank');
+            }
         }
 
         /* ULTRAVIOLET SEARCH ROUTER */
