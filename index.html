@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aarav's Vault — Web OS</title>
+    
+    <script src="/uv/uv.config.js"></script>
+    <script src="/uv/uv.bundle.js"></script>
+
     <style>
         /* Root Settings & Theme Colors */
         :root {
@@ -389,7 +393,7 @@
             transform: scale(1.02);
         }
 
-        /* --- INTERNAL FRAME FOR FNAE --- */
+        /* --- INTERNAL FRAME FOR GAMES --- */
         .game-player-frame {
             display: none;
             position: absolute;
@@ -473,7 +477,7 @@
             <iframe id="arcadeFrame" src="" allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation allow-modals"></iframe>
             <div class="game-control-bar">
                 <div class="embed-credit">Internal Engine // <span>Custom Link Mode</span></div>
-                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit Game</button>
+                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit View</button>
             </div>
         </div>
 
@@ -482,7 +486,7 @@
                 <div class="widget-clock" id="liveClock">Welcome</div>
                 <div class="widget-subtitle">Your cinematic web dashboard portal</div>
                 <form class="search-container" id="vaultSearchForm" onsubmit="handleVaultSearch(event)">
-                    <input type="text" id="vaultSearchInput" placeholder="Search the web or enter a URL...">
+                    <input type="text" id="vaultSearchInput" placeholder="Search the web securely via Ultraviolet...">
                 </form>
             </div>
 
@@ -605,10 +609,8 @@
                 let actionClick = "";
                 
                 if (game.isCustom) {
-                    // Custom working game loads inside the secure layout viewport frame
                     actionClick = `loadInternalGame('${game.customUrl}')`;
                 } else {
-                    // Catalog games launch perfectly directly to pizzaedition.win matching addresses
                     const targetLink = `https://pizzaedition.win/games/${game.folder}/`;
                     actionClick = `window.open('${targetLink}', '_blank')`;
                 }
@@ -672,18 +674,37 @@
             document.getElementById('gameViewport').style.display = 'none';
         }
 
+        /* ULTRAVIOLET SEARCH ROUTER */
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
             if (!input) return;
 
             const isUrl = input.match(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/) || input.startsWith('http');
+            let targetUrl = input;
+
             if (isUrl) {
-                let finalUrl = input;
-                if (!/^https?:\/\//i.test(input)) finalUrl = 'https://' + input;
-                window.open(finalUrl, '_blank'); 
+                if (!/^https?:\/\//i.test(input)) targetUrl = 'https://' + input;
             } else {
-                window.open('https://duckduckgo.com/?q=' + encodeURIComponent(input), '_blank');
+                targetUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
+            }
+
+            // Checks if Ultraviolet configuration object is loaded and responds
+            if (typeof __uv$config !== 'undefined' && navigator.serviceWorker) {
+                navigator.serviceWorker.register('/uv.sw.js', {
+                    scope: __uv$config.prefix
+                }).then(() => {
+                    const proxiedUrl = __uv$config.prefix + __uv$config.encodeUrl(targetUrl);
+                    
+                    // Route option: Load inside your OS frame layout or open in new tab
+                    loadInternalGame(proxiedUrl); 
+                }).catch(err => {
+                    console.error("Ultraviolet registration failed, falling back:", err);
+                    window.open(targetUrl, '_blank');
+                });
+            } else {
+                console.warn("Ultraviolet scripts not active or server is running statically. Directing outward.");
+                window.open(targetUrl, '_blank');
             }
         }
 
