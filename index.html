@@ -9,7 +9,6 @@
     <script src="/uv/uv.bundle.js"></script>
 
     <style>
-        /* Root Settings & Theme Colors */
         :root {
             --sidebar-bg: rgba(20, 18, 24, 0.85);
             --sidebar-border: rgba(255, 255, 255, 0.05);
@@ -17,6 +16,8 @@
             --card-hover: rgba(255, 255, 255, 0.1);
             --accent-color: #ff7b00; 
             --arcade-yellow: #facc15; 
+            --neon-purple: #c026d3;
+            --neon-blue: #22d3ee;
             --text-main: #ffffff;
             --text-muted: #9aa0a6;
         }
@@ -36,7 +37,6 @@
             background: #000;
         }
 
-        /* --- BACKGROUND LIVE WALLPAPER --- */
         .wallpaper-bg-container {
             position: fixed;
             top: 0;
@@ -60,7 +60,6 @@
             filter: brightness(0.35) contrast(1.1);
         }
 
-        /* --- SIDEBAR NAVIGATION --- */
         aside {
             width: 260px;
             min-width: 260px;
@@ -72,7 +71,6 @@
             flex-direction: column;
             padding: 25px 15px;
             z-index: 200; 
-            position: relative;
         }
 
         .brand {
@@ -148,16 +146,6 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: background 0.2s;
-        }
-
-        /* --- MAIN VIEWPORT COMPONENT --- */
-        main {
-            flex: 1;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
         }
 
         .workspace-view {
@@ -248,7 +236,7 @@
         .app-icon { font-size: 2.2rem; }
         .app-name { font-size: 0.8rem; color: var(--text-muted); text-align: center; }
 
-        /* --- ARCADE VAULT DISPLAY --- */
+        /* COOL NEON ARCADE */
         .arcade-view {
             display: none; 
             position: absolute;
@@ -256,11 +244,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #111116;
+            background: #0a0a0f;
             background-image: 
-                radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0),
-                radial-gradient(rgba(255, 255, 255, 0.02) 2px, transparent 0);
-            background-size: 40px 40px, 80px 80px;
+                radial-gradient(circle at 25% 25%, rgba(192, 38, 211, 0.18) 0%, transparent 60%),
+                radial-gradient(circle at 75% 75%, rgba(34, 211, 238, 0.18) 0%, transparent 60%);
             padding: 40px;
             overflow-y: auto;
             z-index: 5;
@@ -275,116 +262,92 @@
             margin-bottom: 30px;
             border-bottom: 4px solid #1a1a24;
             padding-bottom: 20px;
-            position: relative;
         }
 
         .arcade-header-title h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #fff;
+            font-size: 2.8rem;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .arcade-header-title h2 span {
-            color: var(--arcade-yellow);
-        }
-
-        .moving-lines {
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            height: 4px;
-            width: 180px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--arcade-yellow),
-                var(--arcade-yellow) 20px,
-                #000 20px,
-                #000 40px
-            );
-            animation: moveLines 1.2s linear infinite;
-        }
-
-        @keyframes moveLines {
-            0% { background-position: 0px; }
-            100% { background-position: 40px; }
+            letter-spacing: 5px;
+            background: linear-gradient(90deg, var(--arcade-yellow), var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(250, 204, 21, 0.7);
         }
 
         .arcade-search {
-            background: #16161f;
-            border: 2px solid #222230;
-            border-radius: 12px;
-            padding: 10px 20px;
-            width: 320px;
+            background: rgba(22, 22, 31, 0.95);
+            border: 2px solid #444;
+            border-radius: 999px;
+            padding: 14px 28px;
+            width: 380px;
             color: white;
             outline: none;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
+            box-shadow: 0 0 20px rgba(192, 38, 211, 0.4);
         }
 
         .arcade-search:focus {
             border-color: var(--arcade-yellow);
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);
         }
 
         .arcade-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 32px;
+            max-width: 1450px;
         }
 
         .game-card {
-            background: #16161f;
-            border: 2px solid #222230;
-            border-radius: 16px;
-            padding: 20px;
+            background: linear-gradient(145deg, #1a1a24, #111118);
+            border: 2px solid #333;
+            border-radius: 24px;
+            padding: 24px;
             text-align: center;
+            height: 320px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            height: 250px;
-            transition: all 0.25s ease;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
 
         .game-card:hover {
+            transform: translateY(-20px) scale(1.06);
             border-color: var(--arcade-yellow);
-            box-shadow: 0 0 25px rgba(250, 204, 21, 0.1);
+            box-shadow: 0 0 55px rgba(250, 204, 21, 0.6);
         }
 
         .game-card .title {
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 800;
+            font-size: 1.35rem;
             color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 100%;
+            margin: 18px 0 12px;
         }
 
         .btn-play-action {
-            background: #facc15;
+            background: linear-gradient(90deg, #facc15, #fbbf24);
             color: #000;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            padding: 10px 20px;
-            border-radius: 10px;
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            padding: 16px 32px;
+            border-radius: 999px;
             border: none;
             cursor: pointer;
             width: 100%;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: all 0.3s;
         }
 
-        .game-card:hover .btn-play-action {
-            background: #fde047;
-            transform: scale(1.02);
+        .btn-play-action:hover {
+            transform: scale(1.1);
+            background: #fff;
+            box-shadow: 0 0 25px #facc15;
         }
 
-        /* --- INTERNAL FRAME FOR GAMES --- */
         .game-player-frame {
             display: none;
             position: absolute;
@@ -429,9 +392,7 @@
             border: none;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -463,12 +424,11 @@
     </aside>
 
     <main>
-        
         <div class="game-player-frame" id="gameViewport">
             <iframe id="arcadeFrame" src="" allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation allow-modals"></iframe>
             <div class="game-control-bar">
-                <div class="embed-credit">Internal Engine // <span>Custom Link Mode</span></div>
-                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ Exit View</button>
+                <div class="embed-credit">VAULT ENGINE // <span>PROXIED MODE</span></div>
+                <button class="close-arcade-btn" onclick="closeGameEngine()">✕ EXIT GAME</button>
             </div>
         </div>
 
@@ -477,7 +437,7 @@
                 <div class="widget-clock" id="liveClock">Welcome</div>
                 <div class="widget-subtitle">Your cinematic web dashboard portal</div>
                 <form class="search-container" id="vaultSearchForm" onsubmit="handleVaultSearch(event)">
-                    <input type="text" id="vaultSearchInput" placeholder="TikTok, Netflix, YouTube or search anything... (proxied via UV)">
+                    <input type="text" id="vaultSearchInput" placeholder="TikTok, Netflix, YouTube or search anything... (proxied)">
                 </form>
             </div>
 
@@ -502,9 +462,7 @@
             <div style="display:flex; gap:12px; margin-top:25px; justify-content:center; flex-wrap:wrap;">
                 <button onclick="launchProxiedTikTok()" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎵 TikTok Unblocked</button>
                 <button onclick="proxySite('https://www.tiktokv.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎵 TikTok Mirror</button>
-                <button onclick="proxySite('https://urlebird.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">📹 Urlebird Videos</button>
-                <button onclick="proxySite('https://www.netflix.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎬 Netflix</button>
-                <button onclick="proxySite('https://www.youtube.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">📺 YouTube</button>
+                <button onclick="proxySite('https://urlebird.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">📹 Urlebird</button>
             </div>
         </div>
 
@@ -512,7 +470,6 @@
             <div class="arcade-control-header">
                 <div class="arcade-header-title">
                     <h2>Cinema Hub Streaming</h2>
-                    <div class="moving-lines"></div>
                 </div>
             </div>
             <div class="arcade-grid">
@@ -528,76 +485,39 @@
         <div class="arcade-view" id="view-arcade-panel">
             <div class="arcade-control-header">
                 <div class="arcade-header-title">
-                    <h2>THE <span>PIZZA EDITION</span> ARCADE VAULT</h2>
-                    <div class="moving-lines"></div>
+                    <h2>CYBER <span>NEON VAULT</span></h2>
                 </div>
-                <input type="text" class="arcade-search" id="arcadeSearchInput" placeholder="Search verified catalog..." oninput="filterArcadeLibrary()">
+                <input type="text" class="arcade-search" id="arcadeSearchInput" placeholder="Search any game..." oninput="filterArcadeLibrary()">
             </div>
-            
             <div class="arcade-grid" id="dynamicArcadeGrid"></div>
         </div>
-
     </main>
 
     <script>
-        // System Clock Track
+        // System Clock
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         document.getElementById('liveClock').innerText = days[new Date().getDay()];
 
-        // Verified Pizza Edition catalog paths
+        // Expanded Game Library
         const arcadeLibraryDatabase = [
-            { id: "retrobowl", name: "Retro Bowl", folder: "retrobowl" },
-            { id: "slope", name: "Slope", folder: "slope" },
-            { id: "bitlife", name: "BitLife", folder: "bitlife" },
-            { id: "geometrydash", name: "Geometry Dash", folder: "geometry-dash" },
-            { id: "1v1lol", name: "1v1.LOL", folder: "1v1-lol" },
-            { id: "tunnelrush", name: "Tunnel Rush", folder: "tunnel-rush" },
-            { id: "drivemad", name: "Drive Mad", folder: "drive-mad" },
-            { id: "driftboss", name: "Drift Boss", folder: "drift-boss" },
-            { id: "run3", name: "Run 3", folder: "run-3" },
-            { id: "happywheels", name: "Happy Wheels", folder: "happy-wheels" },
-            { id: "subwaysurfers", name: "Subway Surfers", folder: "subway-surfers" },
-            { id: "cookieclicker", name: "Cookie Clicker", folder: "cookie-clicker" },
-            { id: "minecraft", name: "Minecraft Classic", folder: "minecraft" },
-            { id: "eggycar", name: "Eggy Car", folder: "eggy-car" },
-            { id: "smashkarts", name: "Smash Karts", folder: "smash-karts" },
-            { id: "templerun2", name: "Temple Run 2", folder: "temple-run-2" },
-            { id: "basketballstars", name: "Basketball Stars", folder: "basketball-stars" },
-            { id: "stickmanhook", name: "Stickman Hook", folder: "stickman-hook" },
-            { id: "clustertruck", name: "Clustertruck", folder: "clustertruck" },
-            { id: "snowrider3d", name: "Snow Rider 3D", folder: "snow-rider-3d" },
-            { id: "pizzatower", name: "Pizza Tower", folder: "pizza-tower" },
-            { id: "vex7", name: "Vex 7", folder: "vex-7" },
-            { id: "worldshardestgame", name: "World's Hardest Game", folder: "worlds-hardest-game" },
-            { id: "crossyroad", name: "Crossy Road", folder: "crossy-road" },
-            { id: "amongus", name: "Among Us", folder: "among-us" },
-            { id: "badicecream", name: "Bad Ice Cream", folder: "bad-ice-cream" },
-            { id: "badicecream2", name: "Bad Ice Cream 2", folder: "bad-ice-cream-2" },
-            { id: "badicecream3", name: "Bad Ice Cream 3", folder: "bad-ice-cream-3" },
-            { id: "bindingofisaac", name: "Binding of Isaac", folder: "binding-of-isaac" },
-            { id: "bloonstd4", name: "Bloons TD 4", folder: "bloons-td-4" },
-            { id: "bloonstd5", name: "Bloons TD 5", folder: "bloons-td-5" },
-            { id: "bobtherobber", name: "Bob the Robber", folder: "bob-the-robber" },
-            { id: "boxingrandom", name: "Boxing Random", folder: "boxing-random" },
-            { id: "breakout", name: "Breakout", folder: "breakout" },
-            { id: "burritobison", name: "Burrito Bison", folder: "burrito-bison" },
-            { id: "catninja", name: "Cat Ninja", folder: "cat-ninja" },
-            { id: "chess", name: "Chess", folder: "chess" },
-            { id: "cubefield", name: "Cubefield", folder: "cubefield" },
-            { id: "cuttherope", name: "Cut The Rope", folder: "cut-the-rope" },
-            { id: "dealornodeal", name: "Deal or No Deal", folder: "deal-or-no-deal" },
-            { id: "deathrun", name: "Death Run", folder: "death-run" },
-            { id: "diepio", name: "Diep.io", folder: "diepio" },
-            { id: "digdug", name: "Dig Dug", folder: "dig-dug" },
-            { id: "dogeminer", name: "Doge Miner", folder: "doge-miner" },
-            { id: "dogeminer2", name: "Doge Miner 2", folder: "doge-miner-2" },
-            { id: "donkeykong", name: "Donkey Kong", folder: "donkey-kong" },
-            { id: "doodlejump", name: "Doodle Jump", folder: "doodle-jump" },
-            { id: "doom", name: "Doom", folder: "doom" },
-            { id: "ducklife4", name: "Duck Life 4", folder: "duck-life-4" },
-            { id: "elasticman", name: "Elastic Man", folder: "elastic-man" },
-            { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison" },
-            { id: "fnae", name: "Five Nights at Epstein's", folder: "CUSTOM_LINK", isCustom: true, customUrl: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1" }
+            { name: "Retro Bowl", url: "https://pizzaedition.win/games/retrobowl/" },
+            { name: "Slope", url: "https://pizzaedition.win/games/slope/" },
+            { name: "Geometry Dash", url: "https://pizzaedition.win/games/geometry-dash/" },
+            { name: "1v1.LOL", url: "https://pizzaedition.win/games/1v1-lol/" },
+            { name: "Happy Wheels", url: "https://pizzaedition.win/games/happy-wheels/" },
+            { name: "Subway Surfers", url: "https://pizzaedition.win/games/subway-surfers/" },
+            { name: "Minecraft Classic", url: "https://pizzaedition.win/games/minecraft/" },
+            { name: "Pizza Tower", url: "https://pizzaedition.win/games/pizza-tower/" },
+            { name: "Bloxd.io", url: "https://www.snokido.com/game/bloxd-io" },
+            { name: "Moto X3M", url: "https://www.snokido.com/game/moto-x3m" },
+            { name: "Shadow Fight 2", url: "https://www.snokido.com/game/shadow-fight-2" },
+            { name: "Melon Sandbox", url: "https://www.snokido.com/game/melon-sandbox" },
+            { name: "Basket Random", url: "https://www.snokido.com/game/basket-random" },
+            { name: "Fireboy & Watergirl", url: "https://www.snokido.com/game/fireboy-watergirl" },
+            { name: "Friday Night Funkin'", url: "https://www.snokido.com/game/friday-night-funkin" },
+            { name: "Granny", url: "https://playhop.com/app/259805" },
+            { name: "Five Nights at Freddy's 2", url: "https://playhop.com/app/five-nights-at-freddys-2-185647" },
+            { name: "FNAE", url: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1", custom: true }
         ];
 
         function compileArcadeLibrary() {
@@ -605,20 +525,15 @@
             grid.innerHTML = "";
 
             arcadeLibraryDatabase.forEach(game => {
-                let actionClick = "";
-                
-                if (game.isCustom) {
-                    actionClick = `loadInternalGame('${game.customUrl}')`;
-                } else {
-                    const targetLink = `https://pizzaedition.win/games/${game.folder}/`;
-                    actionClick = `window.open('${targetLink}', '_blank')`;
-                }
+                const action = game.custom 
+                    ? `loadInternalGame('${game.url}')` 
+                    : `proxySite('${game.url}')`;
 
                 const cardHTML = `
                     <div class="game-card" data-name="${game.name.toLowerCase()}">
-                        <div class="title" style="font-size: 1.25rem; margin-top: 30px;">🕹️</div>
+                        <div style="font-size: 3.5rem; margin: 20px 0;">🕹️</div>
                         <div class="title">${game.name}</div>
-                        <button class="btn-play-action" onclick="${actionClick}">Launch Game</button>
+                        <button class="btn-play-action" onclick="${action}">PLAY NOW</button>
                     </div>
                 `;
                 grid.innerHTML += cardHTML;
@@ -626,54 +541,13 @@
         }
 
         function filterArcadeLibrary() {
-            const query = document.getElementById('arcadeSearchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.game-card');
-            
-            cards.forEach(card => {
+            const query = document.getElementById('arcadeSearchInput').value.toLowerCase().trim();
+            document.querySelectorAll('.game-card').forEach(card => {
                 const name = card.getAttribute('data-name');
-                if(name && name.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (name && name.includes(query)) ? 'flex' : 'none';
             });
         }
 
-        /* VIEWPORT ROUTER ENGINE */
-        function switchView(target) {
-            closeGameEngine();
-
-            document.getElementById('view-home-panel').style.display = 'none';
-            document.getElementById('view-cinema-panel').style.display = 'none';
-            document.getElementById('view-arcade-panel').style.display = 'none';
-            
-            document.getElementById('nav-home').classList.remove('active');
-            document.getElementById('nav-cinema').classList.remove('active');
-            document.getElementById('nav-arcade').classList.remove('active');
-
-            if(target === 'home') {
-                document.getElementById('view-home-panel').style.display = 'flex';
-                document.getElementById('nav-home').classList.add('active');
-            } else if (target === 'cinema') {
-                document.getElementById('view-cinema-panel').style.display = 'block';
-                document.getElementById('nav-cinema').classList.add('active');
-            } else if (target === 'arcade') {
-                document.getElementById('view-arcade-panel').style.display = 'block';
-                document.getElementById('nav-arcade').classList.add('active');
-            }
-        }
-
-        function loadInternalGame(sourceUrl) {
-            document.getElementById('arcadeFrame').src = sourceUrl;
-            document.getElementById('gameViewport').style.display = 'block';
-        }
-
-        function closeGameEngine() {
-            document.getElementById('arcadeFrame').src = "";
-            document.getElementById('gameViewport').style.display = 'none';
-        }
-
-        /* PROXY QUICK LAUNCHERS */
         function proxySite(url) {
             if (typeof __uv$config !== 'undefined' && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/uv.sw.js', {
@@ -697,11 +571,10 @@
                 "https://urlebird.com",
                 "https://vt.tiktok.com"
             ];
-            
             let index = 0;
             const tryNext = () => {
                 if (index >= tiktokUrls.length) {
-                    alert("❌ All TikTok links blocked on this network.\nTry typing a different mirror in the search bar or ask for more options.");
+                    alert("❌ All TikTok links blocked.\nTry typing a mirror in the search bar.");
                     return;
                 }
                 proxySite(tiktokUrls[index++]);
@@ -709,7 +582,39 @@
             tryNext();
         }
 
-        /* ULTRAVIOLET SEARCH ROUTER */
+        function loadInternalGame(sourceUrl) {
+            document.getElementById('arcadeFrame').src = sourceUrl;
+            document.getElementById('gameViewport').style.display = 'block';
+        }
+
+        function closeGameEngine() {
+            document.getElementById('arcadeFrame').src = "";
+            document.getElementById('gameViewport').style.display = 'none';
+        }
+
+        function switchView(target) {
+            closeGameEngine();
+
+            document.getElementById('view-home-panel').style.display = 'none';
+            document.getElementById('view-cinema-panel').style.display = 'none';
+            document.getElementById('view-arcade-panel').style.display = 'none';
+            
+            document.getElementById('nav-home').classList.remove('active');
+            document.getElementById('nav-cinema').classList.remove('active');
+            document.getElementById('nav-arcade').classList.remove('active');
+
+            if(target === 'home') {
+                document.getElementById('view-home-panel').style.display = 'flex';
+                document.getElementById('nav-home').classList.add('active');
+            } else if (target === 'cinema') {
+                document.getElementById('view-cinema-panel').style.display = 'block';
+                document.getElementById('nav-cinema').classList.add('active');
+            } else if (target === 'arcade') {
+                document.getElementById('view-arcade-panel').style.display = 'block';
+                document.getElementById('nav-arcade').classList.add('active');
+            }
+        }
+
         function handleVaultSearch(event) {
             event.preventDefault();
             const input = document.getElementById('vaultSearchInput').value.trim();
@@ -724,20 +629,7 @@
                 targetUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
             }
 
-            if (typeof __uv$config !== 'undefined' && navigator.serviceWorker) {
-                navigator.serviceWorker.register('/uv.sw.js', {
-                    scope: __uv$config.prefix
-                }).then(() => {
-                    const proxiedUrl = __uv$config.prefix + __uv$config.encodeUrl(targetUrl);
-                    loadInternalGame(proxiedUrl); 
-                }).catch(err => {
-                    console.error("Ultraviolet registration failed, falling back:", err);
-                    window.open(targetUrl, '_blank');
-                });
-            } else {
-                console.warn("Ultraviolet scripts not active or server is running statically. Directing outward.");
-                window.open(targetUrl, '_blank');
-            }
+            proxySite(targetUrl);
         }
 
         window.onload = compileArcadeLibrary;
