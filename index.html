@@ -354,15 +354,6 @@
             box-shadow: 0 0 25px rgba(250, 204, 21, 0.1);
         }
 
-        .game-thumbnail {
-            width: 100%;
-            height: 110px;
-            border-radius: 10px;
-            background: #0d0d11;
-            object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
         .game-card .title {
             font-weight: 700;
             font-size: 1rem;
@@ -510,6 +501,8 @@
 
             <div style="display:flex; gap:12px; margin-top:25px; justify-content:center; flex-wrap:wrap;">
                 <button onclick="launchProxiedTikTok()" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎵 TikTok Unblocked</button>
+                <button onclick="proxySite('https://www.tiktokv.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎵 TikTok Mirror</button>
+                <button onclick="proxySite('https://urlebird.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">📹 Urlebird Videos</button>
                 <button onclick="proxySite('https://www.netflix.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">🎬 Netflix</button>
                 <button onclick="proxySite('https://www.youtube.com')" style="padding:10px 20px; background:#000; border:2px solid #ff7b00; color:white; border-radius:999px; font-weight:600; cursor:pointer;">📺 YouTube</button>
             </div>
@@ -680,12 +673,7 @@
             document.getElementById('gameViewport').style.display = 'none';
         }
 
-        /* PROXY QUICK LAUNCHERS - TikTok + Movies */
-        function launchProxiedTikTok() {
-            const tiktokUrl = "https://www.tiktok.com";
-            proxySite(tiktokUrl);
-        }
-
+        /* PROXY QUICK LAUNCHERS */
         function proxySite(url) {
             if (typeof __uv$config !== 'undefined' && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/uv.sw.js', {
@@ -699,6 +687,26 @@
             } else {
                 window.open(url, '_blank');
             }
+        }
+
+        function launchProxiedTikTok() {
+            const tiktokUrls = [
+                "https://www.tiktok.com",
+                "https://tiktok.com",
+                "https://www.tiktokv.com",
+                "https://urlebird.com",
+                "https://vt.tiktok.com"
+            ];
+            
+            let index = 0;
+            const tryNext = () => {
+                if (index >= tiktokUrls.length) {
+                    alert("❌ All TikTok links blocked on this network.\nTry typing a different mirror in the search bar or ask for more options.");
+                    return;
+                }
+                proxySite(tiktokUrls[index++]);
+            };
+            tryNext();
         }
 
         /* ULTRAVIOLET SEARCH ROUTER */
@@ -716,14 +724,11 @@
                 targetUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
             }
 
-            // Checks if Ultraviolet configuration object is loaded and responds
             if (typeof __uv$config !== 'undefined' && navigator.serviceWorker) {
                 navigator.serviceWorker.register('/uv.sw.js', {
                     scope: __uv$config.prefix
                 }).then(() => {
                     const proxiedUrl = __uv$config.prefix + __uv$config.encodeUrl(targetUrl);
-                    
-                    // Route option: Load inside your OS frame layout or open in new tab
                     loadInternalGame(proxiedUrl); 
                 }).catch(err => {
                     console.error("Ultraviolet registration failed, falling back:", err);
