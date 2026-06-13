@@ -3,414 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POLARIS ONE — CYBER VAULT OS</title>
+    <title>VAULT OS — Aarav's Hub</title>
     
     <script src="/uv/uv.config.js"></script>
     <script src="/uv/uv.bundle.js"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=VT323&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
 
         :root {
-            --neon-pink: #ff00ff;
-            --neon-cyan: #00ffff;
-            --neon-yellow: #ffff00;
-            --neon-purple: #9d00ff;
-            --arcade-yellow: #facc15;
-            --bg-dark: #0a0a0f;
-            --card-bg: rgba(15, 15, 30, 0.85);
+            --bg: #0f0f12;
+            --accent: #d4af37;
+            --text: #e0e0e0;
+            --muted: #888888;
+            --card: rgba(30, 30, 38, 0.85);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Inter', system-ui, sans-serif;
         }
 
         body {
-            color: #fff;
+            color: var(--text);
             height: 100vh;
             display: flex;
+            flex-direction: column;
             overflow: hidden;
-            background: var(--bg-dark);
-            font-family: 'Orbitron', sans-serif;
-            position: relative;
+            background: var(--bg);
         }
 
-        /* EPIC ANIMATED BACKGROUND */
+        /* Elegant Background */
         .wallpaper-bg-container {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            z-index: -2;
+            z-index: -1;
             overflow: hidden;
             pointer-events: none;
         }
-
-        .wallpaper-bg-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 30%, rgba(157, 0, 255, 0.15), transparent 60%),
-                        radial-gradient(circle at 80% 70%, rgba(0, 255, 255, 0.15), transparent 60%);
-            animation: nebulaPulse 25s infinite alternate ease-in-out;
-            z-index: 1;
-        }
-
         .wallpaper-bg-container iframe {
-            width: 100vw;
-            height: 100vh;
-            filter: brightness(0.25) contrast(1.3) saturate(1.8);
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            filter: brightness(0.4) contrast(1.1);
+            object-fit: cover;
         }
 
-        @keyframes nebulaPulse {
-            0% { opacity: 0.6; }
-            100% { opacity: 0.95; }
-        }
-
-        /* SCANLINES + GRID OVERLAY */
-        body::after {
-            content: '';
+        /* Bottom Navigation Bar */
+        .bottom-bar {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(
-                transparent 0px,
-                transparent 2px,
-                rgba(0, 255, 255, 0.03) 2px,
-                rgba(0, 255, 255, 0.03) 4px
-            );
-            pointer-events: none;
-            z-index: 10;
-            animation: scanline 4s linear infinite;
-        }
-
-        @keyframes scanline {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 1000px; }
-        }
-
-        /* SIDEBAR - ULTRA CYBER */
-        aside {
-            width: 280px;
-            background: linear-gradient(180deg, rgba(10,10,20,0.95), rgba(20,15,40,0.95));
+            bottom: 0; left: 0; right: 0;
+            height: 75px;
+            background: rgba(15, 15, 20, 0.95);
             backdrop-filter: blur(20px);
-            border-right: 2px solid var(--neon-cyan);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
-            display: flex;
-            flex-direction: column;
-            padding: 30px 20px;
-            z-index: 200;
-            position: relative;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 50px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(0,255,255,0.3);
-        }
-
-        .brand-logo {
-            font-size: 2.8rem;
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px var(--neon-pink);
-            animation: logoGlow 2s infinite alternate;
-        }
-
-        @keyframes logoGlow {
-            from { text-shadow: 0 0 10px var(--neon-pink); }
-            to { text-shadow: 0 0 40px var(--neon-cyan), 0 0 60px var(--neon-pink); }
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 18px;
-            border-radius: 12px;
-            margin-bottom: 8px;
-            font-size: 1.05rem;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            background: rgba(157, 0, 255, 0.25);
-            box-shadow: 0 0 25px var(--neon-purple);
-            transform: translateX(12px);
-            border-left: 5px solid var(--neon-cyan);
-        }
-
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 40%; height: 200%;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-25deg);
-            animation: shimmer 4s infinite;
-        }
-
-        @keyframes shimmer {
-            100% { transform: translateX(400%); }
-        }
-
-        /* MAIN CONTENT */
-        main {
-            flex: 1;
-            position: relative;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 40px;
+            z-index: 300;
         }
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 12px;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--accent);
+            background: rgba(212, 175, 55, 0.1);
+        }
+        .nav-btn span { font-size: 1.6rem; margin-bottom: 4px; }
 
+        /* Centered Sophisticated Search */
+        .search-wrapper {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 620px;
+            z-index: 250;
+        }
         .search-container {
-            width: 100%;
-            max-width: 720px;
-            background: rgba(10,10,25,0.9);
-            border: 3px solid var(--neon-cyan);
-            border-radius: 9999px;
-            padding: 12px 28px;
-            box-shadow: 0 0 40px rgba(0,255,255,0.5),
-                        inset 0 0 25px rgba(157,0,255,0.3);
-            transition: all 0.4s;
+            background: rgba(25, 25, 32, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            transition: all 0.4s ease;
         }
-
         .search-container:focus-within {
-            box-shadow: 0 0 60px var(--neon-pink),
-                        0 0 90px rgba(255,0,255,0.6);
-            transform: scale(1.03);
+            border-color: var(--accent);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.25);
         }
-
         .search-container input {
             flex: 1;
             background: transparent;
             border: none;
             outline: none;
-            color: #fff;
-            font-size: 1.25rem;
-            font-family: 'VT323', monospace;
-            letter-spacing: 1px;
+            color: white;
+            font-size: 1.15rem;
+            padding: 6px 0;
         }
 
-        /* ARCADE VAULT - FLASHY GRID */
-        .arcade-view {
-            background: #0a0a0f;
-            padding: 40px;
+        main {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            padding-top: 110px;
+            padding-bottom: 90px;
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
             overflow-y: auto;
         }
+        .view.active { display: block; }
 
-        .arcade-header-title h2 {
-            font-size: 3.2rem;
-            font-weight: 900;
-            letter-spacing: 6px;
-            background: linear-gradient(90deg, #ffff00, #ff00ff, #00ffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px currentColor;
+        /* Arcade Grid - Full & Centered */
+        .arcade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 28px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
-
         .game-card {
-            background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
-            border: 3px solid transparent;
-            border-image: linear-gradient(45deg, var(--neon-yellow), var(--neon-pink)) 1;
-            box-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
-            transition: all 0.4s ease;
+            background: var(--card);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-
         .game-card:hover {
-            transform: scale(1.08) rotate(2deg);
-            box-shadow: 0 0 60px var(--neon-yellow),
-                        0 0 90px var(--neon-pink);
-            border-image: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink)) 1;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
-
         .btn-play-action {
-            background: linear-gradient(90deg, #facc15, #ff00ff);
-            color: #000;
-            font-weight: 900;
+            background: var(--accent);
+            color: #111;
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            box-shadow: 0 0 25px #ffff00;
-            transition: all 0.3s;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
-        .btn-play-action:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px #ff00ff;
+        /* Cinema - Full Screen Dulo */
+        #cinema-content {
+            max-width: 1100px;
+            margin: 40px auto;
+            text-align: center;
         }
 
-        /* GAME FRAME */
-        .game-player-frame iframe {
-            box-shadow: 0 0 80px rgba(0,255,255,0.7);
-        }
-
-        /* PARTICLE CANVAS (extra flash) */
-        #particles {
+        /* Game Frame */
+        .game-player-frame {
+            display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.35;
+            background: #000;
+            z-index: 400;
+        }
+        .game-player-frame iframe {
+            width: 100%; height: calc(100% - 60px);
+        }
+        .control-bar {
+            height: 60px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            color: #aaa;
         }
     </style>
 </head>
 <body>
 
-    <canvas id="particles"></canvas>
-
     <div class="wallpaper-bg-container">
         <iframe src="https://www.youtube.com/embed/fKcF32dmcDk?autoplay=1&mute=1&loop=1&playlist=fKcF32dmcDk&controls=0&showinfo=0&rel=0" allow="autoplay; encrypted-media" frameborder="0"></iframe>
     </div>
 
-    <aside>
-        <div class="brand">
-            <div class="brand-logo">POLARIS</div>
-            <div>
-                <h1 style="font-size:1.6rem; letter-spacing:3px;">ONE</h1>
-                <p style="color:#00ffff; font-size:0.85rem;">CYBER VAULT OS</p>
-            </div>
-        </div>
-
-        <div class="nav-section" style="margin-bottom:30px;">
-            <div onclick="switchView('home')" id="nav-home" class="nav-item active"><span style="font-size:1.4rem;">🏠</span> HOME WORKSPACE</div>
-            <div onclick="switchView('cinema')" id="nav-cinema" class="nav-item"><span style="font-size:1.4rem;">🎥</span> CINEMA HUB</div>
-            <div onclick="switchView('arcade')" id="nav-arcade" class="nav-item"><span style="font-size:1.4rem;">🕹️</span> ARCADE VAULT</div>
-        </div>
-
-        <div style="margin-top:auto;">
-            <a href="https://discord.com" target="_blank" style="display:block; background:rgba(88,101,242,0.15); color:#5865F2; padding:16px; border-radius:12px; text-align:center; font-weight:700; border:2px solid #5865F2; text-decoration:none;">JOIN DISCORD</a>
-        </div>
-    </aside>
+    <!-- Cool Centered Search -->
+    <div class="search-wrapper">
+        <form class="search-container" onsubmit="handleVaultSearch(event)">
+            <input type="text" id="vaultSearchInput" placeholder="Proxy search • TikTok, Netflix, YouTube, Games...">
+        </form>
+    </div>
 
     <main>
-        <!-- GAME VIEWPORT -->
-        <div class="game-player-frame" id="gameViewport" style="display:none; background:#000;">
-            <iframe id="arcadeFrame" src="" allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation allow-modals" style="width:100%; height:calc(100% - 50px);"></iframe>
-            <div style="height:50px; background:#111; display:flex; align-items:center; justify-content:space-between; padding:0 30px; border-top:3px solid #00ffff;">
-                <div style="color:#00ffff; font-family:monospace;">POLARIS ENGINE // UNBLOCKED MODE</div>
-                <button onclick="closeGameEngine()" style="background:#ff0066; color:white; border:none; padding:8px 24px; border-radius:8px; font-weight:900; cursor:pointer;">EXIT VAULT</button>
+        <!-- Home View -->
+        <div id="view-home" class="view active">
+            <div style="text-align:center; padding-top:80px;">
+                <h1 style="font-family:'Playfair Display', serif; font-size:4.2rem; letter-spacing:-2px; margin-bottom:16px;">Vault OS</h1>
+                <p style="font-size:1.35rem; color:var(--muted);">Sophisticated. Unblocked. Yours.</p>
             </div>
         </div>
 
-        <!-- HOME -->
-        <div id="view-home-panel" class="workspace-view" style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%;">
-            <div style="text-align:center; margin-bottom:60px;">
-                <div id="liveClock" style="font-size:5rem; font-weight:900; letter-spacing:-4px; background:linear-gradient(90deg,#00ffff,#ff00ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">SATURDAY</div>
-                <p style="font-size:1.4rem; color:#00ffff; margin-top:10px;">UNBLOCKED PROXY DASHBOARD</p>
-            </div>
-
-            <form class="search-container" onsubmit="handleVaultSearch(event)">
-                <input type="text" id="vaultSearchInput" placeholder="PROXY SEARCH → TikTok, Netflix, Games, YouTube..." style="font-size:1.4rem;">
-            </form>
-
-            <div style="display:flex; gap:30px; margin-top:80px; flex-wrap:wrap; justify-content:center;">
-                <a onclick="quickProxy('https://www.tiktok.com')" class="app-tile" style="cursor:pointer; width:130px; height:130px; background:rgba(20,20,40,0.9); border:3px solid #ff00ff; border-radius:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:0.3s;">
-                    <div style="font-size:3.5rem;">🎵</div>
-                    <div style="margin-top:12px; font-weight:700;">TIKTOK</div>
-                </a>
-                <a onclick="quickProxy('https://www.netflix.com')" class="app-tile" style="cursor:pointer; width:130px; height:130px; background:rgba(20,20,40,0.9); border:3px solid #e50914; border-radius:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:0.3s;">
-                    <div style="font-size:3.5rem;">📺</div>
-                    <div style="margin-top:12px; font-weight:700;">NETFLIX</div>
-                </a>
-                <!-- Add more as needed -->
+        <!-- Arcade View -->
+        <div id="view-arcade" class="view">
+            <div style="max-width:1400px; margin:0 auto;">
+                <h2 style="text-align:center; font-size:2.4rem; margin-bottom:40px; color:var(--accent);">Arcade Vault</h2>
+                <input type="text" id="arcadeSearchInput" placeholder="Search games..." 
+                       style="width:100%; max-width:500px; margin:0 auto 40px; display:block; background:rgba(40,40,48,0.8); border:1px solid #444; border-radius:50px; padding:16px 24px; color:white; font-size:1.1rem;"
+                       oninput="filterArcadeLibrary()">
+                <div class="arcade-grid" id="dynamicArcadeGrid"></div>
             </div>
         </div>
 
-        <!-- CINEMA + ARCADE (same as before but flashier) -->
-        <div id="view-cinema-panel" class="arcade-view" style="display:none;">
-            <div style="text-align:center; margin-bottom:40px;">
-                <h2 style="font-size:3rem; background:linear-gradient(#ffff00,#ff00ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">CINEMA HUB</h2>
-            </div>
-            <div style="display:flex; justify-content:center;">
-                <a href="https://dulo.tv" target="_blank" style="text-decoration:none;">
-                    <div class="game-card" style="width:420px; padding:40px; text-align:center;">
-                        <div style="font-size:4rem; margin-bottom:20px;">🎬</div>
-                        <div style="font-size:2rem; margin:20px 0;">DULO TV</div>
-                        <button class="btn-play-action" style="width:280px; padding:18px; font-size:1.1rem;">LAUNCH STREAM</button>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div id="view-arcade-panel" class="arcade-view" style="display:none;">
-            <div class="arcade-control-header">
-                <div class="arcade-header-title">
-                    <h2>ARCADE <span style="color:#ffff00;">VAULT</span></h2>
+        <!-- Cinema View -->
+        <div id="view-cinema" class="view">
+            <div id="cinema-content">
+                <h2 style="font-size:2.8rem; margin-bottom:30px;">Cinema Hub</h2>
+                <div onclick="loadCinema()" style="cursor:pointer; background:var(--card); border-radius:24px; padding:60px 40px; max-width:800px; margin:0 auto; transition:0.3s;">
+                    <div style="font-size:6rem; margin-bottom:20px;">🎬</div>
+                    <h3 style="font-size:2rem; margin:20px 0;">DULO TV</h3>
+                    <button class="btn-play-action" style="padding:16px 48px; font-size:1.1rem;">Launch Stream</button>
                 </div>
-                <input type="text" id="arcadeSearchInput" placeholder="SEARCH UNBLOCKED GAMES..." class="arcade-search" oninput="filterArcadeLibrary()" style="background:#111; border:3px solid #ffff00; color:white; padding:16px; font-size:1.1rem;">
             </div>
-            <div class="arcade-grid" id="dynamicArcadeGrid"></div>
         </div>
     </main>
 
+    <!-- Bottom Bar -->
+    <div class="bottom-bar">
+        <a onclick="switchView('home')" id="nav-home" class="nav-btn active"><span>🏠</span> Home</a>
+        <a onclick="switchView('arcade')" id="nav-arcade" class="nav-btn"><span>🕹️</span> Arcade</a>
+        <a onclick="switchView('cinema')" id="nav-cinema" class="nav-btn"><span>🎥</span> Cinema</a>
+        <a href="https://discord.com" target="_blank" class="nav-btn"><span>💬</span> Discord</a>
+    </div>
+
+    <!-- Internal Player -->
+    <div class="game-player-frame" id="gameViewport">
+        <iframe id="arcadeFrame" src="" allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation allow-modals"></iframe>
+        <div class="control-bar">
+            <div>VAULT OS • Unblocked Mode</div>
+            <button onclick="closeGameEngine()" style="background:#c22; color:white; border:none; padding:10px 26px; border-radius:8px; cursor:pointer;">Close</button>
+        </div>
+    </div>
+
     <script>
-        // Particles for extra flash
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particles = [];
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 1.5 - 0.75;
-                this.speedY = Math.random() * 1.5 - 0.75;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = '#00ffff';
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = '#00ffff';
-                ctx.fillRect(this.x, this.y, this.size, this.size);
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for(let i = 0; i < 120; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for(let p of particles) {
-                p.update();
-                p.draw();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Clock + existing scripts
-        const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
-        document.getElementById('liveClock').innerText = days[new Date().getDay()];
-
-        // Arcade Library (unchanged but flashier cards)
-        const arcadeLibraryDatabase = [ /* your full list from before */ ];
+        // Clock removed for clean look
+        const arcadeLibraryDatabase = [ /* your full list from before - keeping all 50+ games */ 
+            { id: "retrobowl", name: "Retro Bowl", folder: "retrobowl" },
+            { id: "slope", name: "Slope", folder: "slope" },
+            { id: "bitlife", name: "BitLife", folder: "bitlife" },
+            { id: "geometrydash", name: "Geometry Dash", folder: "geometry-dash" },
+            { id: "1v1lol", name: "1v1.LOL", folder: "1v1-lol" },
+            { id: "tunnelrush", name: "Tunnel Rush", folder: "tunnel-rush" },
+            { id: "drivemad", name: "Drive Mad", folder: "drive-mad" },
+            { id: "driftboss", name: "Drift Boss", folder: "drift-boss" },
+            { id: "run3", name: "Run 3", folder: "run-3" },
+            { id: "happywheels", name: "Happy Wheels", folder: "happy-wheels" },
+            { id: "subwaysurfers", name: "Subway Surfers", folder: "subway-surfers" },
+            { id: "cookieclicker", name: "Cookie Clicker", folder: "cookie-clicker" },
+            { id: "minecraft", name: "Minecraft Classic", folder: "minecraft" },
+            { id: "eggycar", name: "Eggy Car", folder: "eggy-car" },
+            { id: "smashkarts", name: "Smash Karts", folder: "smash-karts" },
+            { id: "templerun2", name: "Temple Run 2", folder: "temple-run-2" },
+            { id: "basketballstars", name: "Basketball Stars", folder: "basketball-stars" },
+            { id: "stickmanhook", name: "Stickman Hook", folder: "stickman-hook" },
+            { id: "clustertruck", name: "Clustertruck", folder: "clustertruck" },
+            { id: "snowrider3d", name: "Snow Rider 3D", folder: "snow-rider-3d" },
+            { id: "pizzatower", name: "Pizza Tower", folder: "pizza-tower" },
+            { id: "vex7", name: "Vex 7", folder: "vex-7" },
+            { id: "worldshardestgame", name: "World's Hardest Game", folder: "worlds-hardest-game" },
+            { id: "crossyroad", name: "Crossy Road", folder: "crossy-road" },
+            { id: "amongus", name: "Among Us", folder: "among-us" },
+            { id: "badicecream", name: "Bad Ice Cream", folder: "bad-ice-cream" },
+            { id: "badicecream2", name: "Bad Ice Cream 2", folder: "bad-ice-cream-2" },
+            { id: "badicecream3", name: "Bad Ice Cream 3", folder: "bad-ice-cream-3" },
+            { id: "bindingofisaac", name: "Binding of Isaac", folder: "binding-of-isaac" },
+            { id: "bloonstd4", name: "Bloons TD 4", folder: "bloons-td-4" },
+            { id: "bloonstd5", name: "Bloons TD 5", folder: "bloons-td-5" },
+            { id: "bobtherobber", name: "Bob the Robber", folder: "bob-the-robber" },
+            { id: "boxingrandom", name: "Boxing Random", folder: "boxing-random" },
+            { id: "breakout", name: "Breakout", folder: "breakout" },
+            { id: "burritobison", name: "Burrito Bison", folder: "burrito-bison" },
+            { id: "catninja", name: "Cat Ninja", folder: "cat-ninja" },
+            { id: "chess", name: "Chess", folder: "chess" },
+            { id: "cubefield", name: "Cubefield", folder: "cubefield" },
+            { id: "cuttherope", name: "Cut The Rope", folder: "cut-the-rope" },
+            { id: "dealornodeal", name: "Deal or No Deal", folder: "deal-or-no-deal" },
+            { id: "deathrun", name: "Death Run", folder: "death-run" },
+            { id: "diepio", name: "Diep.io", folder: "diepio" },
+            { id: "digdug", name: "Dig Dug", folder: "dig-dug" },
+            { id: "dogeminer", name: "Doge Miner", folder: "doge-miner" },
+            { id: "dogeminer2", name: "Doge Miner 2", folder: "doge-miner-2" },
+            { id: "donkeykong", name: "Donkey Kong", folder: "donkey-kong" },
+            { id: "doodlejump", name: "Doodle Jump", folder: "doodle-jump" },
+            { id: "doom", name: "Doom", folder: "doom" },
+            { id: "ducklife4", name: "Duck Life 4", folder: "duck-life-4" },
+            { id: "elasticman", name: "Elastic Man", folder: "elastic-man" },
+            { id: "escapetheprison", name: "Escaping the Prison", folder: "escaping-the-prison" },
+            { id: "fnae", name: "Five Nights at Epstein's", folder: "CUSTOM_LINK", isCustom: true, customUrl: "https://fivenightsatepsteins.org/FNAE-HTML5-1.2.3/index.html?autostart=1" }
+        ];
 
         function compileArcadeLibrary() {
             const grid = document.getElementById('dynamicArcadeGrid');
@@ -419,27 +325,31 @@
                 let action = game.isCustom ? 
                     `loadInternalGame('${game.customUrl}')` : 
                     `window.open('https://pizzaedition.win/games/${game.folder}/', '_blank')`;
-
-                const html = `
-                    <div class="game-card" data-name="${game.name.toLowerCase()}" style="height:280px;">
-                        <div style="height:140px; background:#111; margin:-20px -20px 15px; border-radius:12px 12px 0 0; display:flex; align-items:center; justify-content:center; font-size:4rem;">🕹️</div>
-                        <div class="title" style="font-size:1.35rem; margin-bottom:15px;">${game.name}</div>
-                        <button class="btn-play-action" onclick="${action}">PLAY NOW</button>
+                
+                const card = `
+                    <div class="game-card" data-name="${game.name.toLowerCase()}">
+                        <div style="font-size:4.5rem; margin:20px 0;">🕹️</div>
+                        <div style="font-weight:600; font-size:1.25rem; margin-bottom:20px;">${game.name}</div>
+                        <button class="btn-play-action" onclick="${action}">Play Now</button>
                     </div>`;
-                grid.innerHTML += html;
+                grid.innerHTML += card;
             });
         }
 
         function filterArcadeLibrary() {
-            const q = document.getElementById('arcadeSearchInput').value.toLowerCase();
-            document.querySelectorAll('.game-card').forEach(c => {
-                c.style.display = c.getAttribute('data-name').includes(q) ? 'flex' : 'none';
+            const q = document.getElementById('arcadeSearchInput').value.toLowerCase().trim();
+            document.querySelectorAll('.game-card').forEach(card => {
+                const name = card.getAttribute('data-name');
+                card.style.display = name.includes(q) ? 'flex' : 'none';
             });
         }
 
-        function switchView(v) {
-            document.querySelectorAll('.workspace-view, .arcade-view').forEach(el => el.style.display = 'none');
-            document.getElementById(`view-${v}-panel`).style.display = v === 'home' ? 'flex' : 'block';
+        function switchView(view) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`view-${view}`).classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`nav-${view}`).classList.add('active');
         }
 
         function loadInternalGame(url) {
@@ -447,38 +357,36 @@
             document.getElementById('gameViewport').style.display = 'block';
         }
 
+        function loadCinema() {
+            loadInternalGame('https://dulo.tv');
+        }
+
         function closeGameEngine() {
-            document.getElementById('arcadeFrame').src = '';
+            document.getElementById('arcadeFrame').src = "";
             document.getElementById('gameViewport').style.display = 'none';
         }
 
         function handleVaultSearch(e) {
             e.preventDefault();
-            let q = document.getElementById('vaultSearchInput').value.trim();
-            if(!q) return;
-            let target = q.startsWith('http') ? q : 'https://' + q;
-            if (!q.match(/^https?:\/\//)) target = `https://duckduckgo.com/?q=${encodeURIComponent(q)}`;
-            
+            let input = document.getElementById('vaultSearchInput').value.trim();
+            if (!input) return;
+
+            let target = input.match(/^https?:\/\//i) ? input : 'https://' + input;
+            if (!input.includes('.')) target = 'https://duckduckgo.com/?q=' + encodeURIComponent(input);
+
             if (typeof __uv$config !== 'undefined') {
                 navigator.serviceWorker.register('/uv.sw.js').then(() => {
                     const proxied = __uv$config.prefix + __uv$config.encodeUrl(target);
                     loadInternalGame(proxied);
-                });
+                }).catch(() => window.open(target, '_blank'));
             } else {
                 window.open(target, '_blank');
             }
         }
 
-        function quickProxy(url) {
-            if (typeof __uv$config !== 'undefined') {
-                const proxied = __uv$config.prefix + __uv$config.encodeUrl(url);
-                loadInternalGame(proxied);
-            } else window.open(url, '_blank');
-        }
+        // Quick app shortcuts can be added to bottom bar if needed
 
         window.onload = () => {
-            initParticles();
-            animateParticles();
             compileArcadeLibrary();
         };
     </script>
